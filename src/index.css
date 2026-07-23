@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  body {
+    @apply font-sans text-text-body antialiased selection:bg-nie-orange/20 selection:text-nie-navy;
+    background-color: theme('colors.bg.light');
+    background-image: radial-gradient(circle at top right, rgba(245, 130, 31, 0.03), transparent 400px), 
+                      radial-gradient(circle at bottom left, rgba(13, 43, 110, 0.03), transparent 400px);
+    background-attachment: fixed;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading text-nie-navy font-bold tracking-tight;
+  }
+}
