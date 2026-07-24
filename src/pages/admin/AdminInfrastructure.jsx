@@ -135,7 +135,7 @@ const AdminInfrastructure = () => {
         <div className="flex items-center">
           <div className="h-12 w-20 flex-shrink-0">
             {row.image_url ? (
-              <img className="h-12 w-20 rounded object-cover" src={row.image_url} alt="" />
+              <img className="h-12 w-20 rounded object-cover" loading="lazy" width="80" height="48" src={row.image_url} alt="" />
             ) : (
               <div className="h-12 w-20 rounded bg-gray-200 flex items-center justify-center text-gray-500 font-bold">
                 IMG

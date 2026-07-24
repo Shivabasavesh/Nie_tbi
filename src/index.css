@@ -1,17 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap');
 @import "tailwindcss";
-@config "../tailwind.config.js";
+:root {
+  /* Blues */
+  --blue-dark:    #0D2B6E;   /* Deep navy — headings, footer bg */
+  --blue-mid:     #1A3F9F;   /* Mid blue — borders, CTA gradient start */
+  --blue-light:   #2E5FD9;   /* Accent blue — icons, links, gradient end */
 
-@plugin "@tailwindcss/typography";
+  /* Oranges */
+  --orange:       #F5821F;   /* Primary CTA — buttons, accents, icons */
+  --orange-light: #FF9A3C;   /* Secondary orange — gradient end on buttons */
 
-@layer base {
-  body {
-    @apply font-sans text-text-body antialiased selection:bg-nie-orange/20 selection:text-nie-navy;
-    background-color: theme('colors.bg.light');
-    background-image: radial-gradient(circle at top right, rgba(245, 130, 31, 0.03), transparent 400px), 
-                      radial-gradient(circle at bottom left, rgba(13, 43, 110, 0.03), transparent 400px);
-    background-attachment: fixed;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading text-nie-navy font-bold tracking-tight;
-  }
+  /* Neutrals */
+  --white:        #FFFFFF;
+  --gray-light:   #F4F6FB;   /* Alternate section background */
+  --gray-text:    #555E7B;   /* Body text, descriptions */
+  --black:        #0A0A0A;
+
+  --font-heading: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+  --font-body:    'Inter', sans-serif;
+
+  --banner-h: 0px;
 }
+
+body {
+  font-family: var(--font-body);
+  color: var(--gray-text);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--blue-dark);
+}
+
+/* iOS auto-zoom fix — CRITICAL */
+input, textarea, select { font-size: 16px !important; }
+
+/* Touch targets on mobile */
+@media (max-width: 639px) {
+  button, a, [role="button"] { min-height: 44px; min-width: 44px; }
+}
+
+/* Responsive Images */
+img { max-width: 100%; height: auto; }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Word wrap */
+* { word-break: break-word; overflow-wrap: break-word; }
+
+/* Fluid grid classes */
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+
+/* Split layout */
+.split { display: flex; flex-wrap: wrap; gap: 60px; align-items: center; }
+.split > * { flex: 1 1 300px; }

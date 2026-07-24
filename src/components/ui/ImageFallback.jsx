@@ -18,6 +18,7 @@ export default function ImageFallback({ src, alt, className, fallbackText }) {
     <img 
       src={src} 
       alt={alt || "Image"} 
+      loading="lazy"
       className={cn("object-cover", className)} 
       onError={() => setHasError(true)} 
     />

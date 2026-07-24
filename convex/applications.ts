@@ -76,3 +76,20 @@ export const remove = mutation({
     return await ctx.db.delete(args.id);
   },
 });
+
+export const list = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db.query("applications").order("desc").collect();
+  },
+});
+
+export const updateApplicationStatus = mutation({
+  args: {
+    id: v.id("applications"),
+    status: v.string(),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.patch(args.id, { status: args.status });
+  },
+});

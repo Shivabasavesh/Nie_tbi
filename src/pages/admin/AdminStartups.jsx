@@ -136,7 +136,7 @@ const AdminStartups = () => {
         <div className="flex items-center">
           <div className="h-10 w-10 flex-shrink-0">
             {row.logo_url ? (
-              <img className="h-10 w-10 rounded-full object-cover" src={row.logo_url} alt="" />
+              <img className="h-10 w-10 rounded-full object-cover" loading="lazy" width="40" height="40" src={row.logo_url} alt="" />
             ) : (
               <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold">
                 {row.name.charAt(0)}

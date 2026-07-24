@@ -91,3 +91,59 @@ export const remove = mutation({
     return await ctx.db.delete(args.id);
   },
 });
+
+// APIs requested in Phase 3 Session 8
+export const listStartups = query({
+  args: {
+    stage: v.optional(v.string()),
+    isPublished: v.optional(v.boolean()),
+  },
+  handler: async (ctx, args) => {
+    let q = ctx.db.query("startups");
+    
+    if (args.stage !== undefined) {
+      q = q.filter((q) => q.eq(q.field("stage"), args.stage));
+    }
+    if (args.isPublished !== undefined) {
+      q = q.filter((q) => q.eq(q.field("isPublished"), args.isPublished));
+    }
+    
+    return await q.collect();
+  },
+});
+
+export const getStartupById = query({
+  args: { id: v.id("startups") },
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.id);
+  },
+});
+
+export const createStartup = mutation({
+  args: {
+    name: v.string(),
+    sector: v.string(),
+    stage: v.string(),
+    description: v.string(),
+    logoUrl: v.optional(v.string()),
+    website: v.optional(v.string()),
+    foundedYear: v.optional(v.number()),
+    isPublished: v.boolean(),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert("startups", {
+      ...args,
+      slug: args.name.toLowerCase().replace(/\s+/g, '-'),
+      founder_name: "TBD", // required by existing schema
+      is_graduated: args.stage === "graduated",
+      is_featured: false,
+    });
+  },
+});
+
+export const deleteStartup = mutation({
+  args: { id: v.id("startups") },
+  handler: async (ctx, args) => {
+    return await ctx.db.delete(args.id);
+  },
+});

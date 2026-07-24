@@ -33,10 +33,17 @@ export default defineSchema({
     website_link: v.optional(v.string()),
     is_graduated: v.boolean(),
     is_featured: v.boolean(),
+    stage: v.optional(v.string()),
+    logoUrl: v.optional(v.string()),
+    website: v.optional(v.string()),
+    foundedYear: v.optional(v.number()),
+    isPublished: v.optional(v.boolean()),
   })
     .index("by_slug", ["slug"])
     .index("by_is_featured", ["is_featured"])
-    .index("by_is_graduated", ["is_graduated"]),
+    .index("by_is_graduated", ["is_graduated"])
+    .index("by_stage", ["stage"])
+    .index("by_isPublished", ["isPublished"]),
 
   events: defineTable({
     slug: v.string(),
@@ -48,6 +55,10 @@ export default defineSchema({
     registration_link: v.optional(v.string()),
     status: v.string(),
     is_featured: v.boolean(),
+    date: v.optional(v.number()),
+    venue: v.optional(v.string()),
+    imageUrl: v.optional(v.string()),
+    isPublished: v.optional(v.boolean()),
   })
     .index("by_slug", ["slug"])
     .index("by_is_featured", ["is_featured"])
@@ -108,4 +119,49 @@ export default defineSchema({
     status: v.string(),
     submitted_at: v.string(),
   }).index("by_status", ["status"]),
+
+  messages: defineTable({
+    name: v.string(),
+    email: v.string(),
+    phone: v.optional(v.string()),
+    message: v.string(),
+    status: v.string(),
+    submitted_at: v.string(),
+  }),
+
+  news: defineTable({
+    title: v.string(),
+    slug: v.string(),
+    body: v.string(),
+    imageUrl: v.optional(v.string()),
+    tags: v.array(v.string()),
+    publishedAt: v.number(),
+    isPublished: v.boolean(),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_isPublished", ["isPublished"])
+    .index("by_publishedAt", ["publishedAt"]),
+
+  posts: defineTable({
+    title: v.string(),
+    slug: v.string(),
+    body: v.string(),
+    tags: v.array(v.string()),
+    author: v.string(),
+    publishedAt: v.number(),
+    isPublished: v.boolean(),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_isPublished", ["isPublished"])
+    .index("by_publishedAt", ["publishedAt"]),
+
+  donations: defineTable({
+    donorName: v.string(),
+    email: v.string(),
+    phone: v.optional(v.string()),
+    amount: v.number(),
+    reference: v.optional(v.string()),
+    donatedAt: v.number(),
+    isVerified: v.boolean(),
+  }),
 });

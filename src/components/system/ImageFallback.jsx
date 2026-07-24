@@ -15,7 +15,7 @@ const ImageFallback = ({ src, alt, className }) => {
   return (
     <img 
       src={src} 
-      alt={alt} 
+      alt={alt} loading="lazy" 
       className={className} 
       onError={() => setError(true)} 
     />

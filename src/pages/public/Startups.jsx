@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import PageHero from '../../components/page-structure/PageHero';
 import StartupCard from '../../components/data-display/StartupCard';
-import { useSupabaseTable } from '../../hooks/useSupabaseData';
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 import CardSkeleton from '../../components/system/CardSkeleton';
 import EmptyState from '../../components/system/EmptyState';
 import ErrorState from '../../components/system/ErrorState';
@@ -24,11 +25,17 @@ const Startups = () => {
   const [search, setSearch] = useState('');
   const [sector, setSector] = useState('');
 
-  const { data: startups, isLoading, isError, refetch } = useSupabaseTable('startups', {
-    filter: { is_graduated: isGraduated, sector: sector === 'All' ? '' : sector },
-    search: search,
-    searchColumn: 'name',
-    order: { column: 'created_at', ascending: false }
+  const startups = useQuery(api.startups.listStartups, { 
+    stage: isGraduated ? "graduated" : "incubated",
+    isPublished: true 
+  });
+
+  const isLoading = startups === undefined;
+  
+  const filteredStartups = startups?.filter(s => {
+    const matchesSearch = s.name.toLowerCase().includes(search.toLowerCase());
+    const matchesSector = sector === 'All' || s.sector === sector;
+    return matchesSearch && matchesSector;
   });
 
   return (
@@ -82,9 +89,7 @@ const Startups = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <CardSkeleton /><CardSkeleton /><CardSkeleton />
           </div>
-        ) : isError ? (
-          <ErrorState onRetry={refetch} />
-        ) : !startups || startups.length === 0 ? (
+        ) : !filteredStartups || filteredStartups.length === 0 ? (
           <EmptyState title="No startups found" message="Try adjusting your search or filter criteria." />
         ) : (
           <motion.div 
@@ -93,15 +98,17 @@ const Startups = () => {
             initial="hidden"
             animate="show"
           >
-            {startups.map(startup => (
-              <motion.div key={startup.id} variants={staggerItem}>
+            {filteredStartups.map(startup => (
+              <motion.div key={startup._id} variants={staggerItem}>
                 <StartupCard 
                   name={startup.name}
-                  logo={startup.logo_url}
+                  logo={startup.logoUrl || startup.logo_url}
                   sector={startup.sector}
                   description={startup.description}
-                  websiteLink={startup.website_link}
+                  websiteLink={startup.website || startup.website_link}
                   featured={startup.is_featured}
+                  foundedYear={startup.foundedYear}
+                  isGraduated={startup.stage === "graduated" || startup.is_graduated}
                 />
               </motion.div>
             ))}

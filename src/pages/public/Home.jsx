@@ -1,265 +1,140 @@
+import SEOHead from '../../components/system/SEOHead';
 import React from 'react';
 import { motion } from 'framer-motion';
-import SectionHeader from '../../components/page-structure/SectionHeader';
-import CTASection from '../../components/page-structure/CTASection';
-import StatCard from '../../components/data-display/StatCard';
-import StartupCard from '../../components/data-display/StartupCard';
-import EventCard from '../../components/data-display/EventCard';
-import InfrastructureCard from '../../components/data-display/InfrastructureCard';
-import { Button } from '../../components/ui/Button';
-import { Rocket, Users, Target, Building2, Cpu, Leaf, Wrench, Sprout, Network } from 'lucide-react';
-import SEOHead from '../../components/system/SEOHead';
-import { useFeaturedStartups } from '../../hooks/useStartups';
-import { useUpcomingEvents } from '../../hooks/useEvents';
-import { useInfrastructure } from '../../hooks/useInfrastructure';
+import { Leaf, Zap, Cpu, Recycle, Globe, Wrench, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
-const staggerItem = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+const cardItem = {
+  hidden: { opacity: 0, y: 30 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
-const Home = () => {
-  const { data: featuredStartups, isLoading: loadingStartups } = useFeaturedStartups();
-  const { data: upcomingEvents, isLoading: loadingEvents } = useUpcomingEvents();
-  const { data: infrastructure, isLoading: loadingInfrastructure } = useInfrastructure();
-
+export default function Home() {
   return (
-    <div className="bg-bg-light min-h-screen overflow-hidden">
-      <SEOHead title="Home" description="Empowering Innovators and Building Enterprises at NIETBI." />
-      {/* 1. Hero Section */}
-      <section className="bg-nie-navy text-white py-24 px-6 relative overflow-hidden">
-        <motion.div 
-          className="max-w-7xl mx-auto text-center relative z-10"
-          initial="hidden"
-          animate="show"
-          variants={staggerContainer}
-        >
-          <motion.h1 variants={staggerItem} className="text-5xl md:text-6xl font-bold mb-6">Empowering Innovators. Building Enterprises.</motion.h1>
-          <motion.p variants={staggerItem} className="text-xl opacity-90 mb-10 max-w-3xl mx-auto">
-            The National Institute of Engineering Technology Business Incubator (NIETBI) is the official innovation and entrepreneurship arm of NIE, fostering a robust ecosystem for startups to scale and succeed.
-          </motion.p>
-          <motion.div variants={staggerItem} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button variant="primary" size="lg">Apply Now</Button>
-            <Button variant="outline" size="lg" className="bg-transparent text-white border-white hover:bg-white hover:text-nie-navy">
-              Explore Programs
-            </Button>
+    <div>
+      <SEOHead title="Home | NIETBI" description="Explore Home at NIE TBI. Learn more about our deep-tech incubation ecosystem." />
+      {/* Hero Section */}
+      <section style={{
+        minHeight: '100dvh', background: '#060E24',
+        paddingTop: 'calc(68px + var(--banner-h, 0px))',
+        position: 'relative', overflow: 'hidden'
+      }}>
+        {/* Floating Orbs */}
+        <motion.div animate={{ y: [0, -24, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          style={{ position: 'absolute', top: '-10%', left: '-8%', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(46,95,217,0.35) 0%, transparent 70%)', filter: 'blur(60px)', pointerEvents: 'none' }} />
+        <motion.div animate={{ y: [0, 20, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          style={{ position: 'absolute', bottom: '-15%', right: '-5%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,130,31,0.3) 0%, transparent 70%)', filter: 'blur(70px)', pointerEvents: 'none' }} />
+        <motion.div animate={{ y: [0, -16, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          style={{ position: 'absolute', top: '35%', right: '30%', width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(30,74,180,0.25) 0%, transparent 70%)', filter: 'blur(80px)', pointerEvents: 'none' }} />
+
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '60px 24px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 60, position: 'relative', zIndex: 1, minHeight: 'calc(100vh - 200px)', alignItems: 'center' }}>
+          
+          <motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.13 } } }}>
+            <motion.div variants={fadeUp} style={{ display: 'inline-block', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', padding: '8px 16px', borderRadius: 20, color: 'white', fontSize: 13, fontWeight: 600, marginBottom: 24 }}>
+              🏛 TBI 2.0 Programme — Govt. of Karnataka
+            </motion.div>
+            <motion.h1 variants={fadeUp} style={{ fontSize: 'clamp(36px, 4.5vw, 64px)', fontWeight: 800, lineHeight: 1.1, marginBottom: 24 }}>
+              <span style={{ background: 'linear-gradient(135deg, #FFFFFF 0%, #A8C4FF 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Turning Ideas Into </span>
+              <span style={{ background: 'linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Impact.</span>
+            </motion.h1>
+            <motion.p variants={fadeUp} style={{ color: '#A0AECF', fontSize: 'clamp(15px, 1.4vw, 18px)', lineHeight: 1.7, marginBottom: 40, maxWidth: 520 }}>
+              Empowering deep-tech startups in AgriTech, Clean Energy, Sustainable Technologies and AI & ML from Mysuru and beyond.
+            </motion.p>
+            <motion.div variants={fadeUp} style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+              <Link to="/apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)', color: '#fff', padding: '14px 32px', borderRadius: 8, textDecoration: 'none', fontWeight: 700, fontSize: 15, boxShadow: '0 4px 20px rgba(245,130,31,0.4)' }}>
+                Apply Now →
+              </Link>
+              <a href="#stats-section" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: '#fff', padding: '14px 28px', borderRadius: 8, textDecoration: 'none', fontWeight: 600, fontSize: 15, border: '1px solid rgba(255,255,255,0.3)', backdropFilter: 'blur(8px)' }}>
+                Learn More
+              </a>
+            </motion.div>
           </motion.div>
+
+          <motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, maxWidth: 380, margin: '0 auto' }}>
+            {[
+              { value: 'Est. 1946', label: 'NIE Mysuru' },
+              { value: '6+', label: 'Focus Sectors' },
+              { value: 'TBI 2.0', label: 'Govt. Karnataka' },
+              { value: '₹ Funded', label: 'Startup Support' }
+            ].map((stat, i) => (
+              <motion.div key={i} variants={{ hidden: { opacity: 0, x: 40 }, show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } } }} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 16, padding: '24px 20px', textAlign: 'center', backdropFilter: 'blur(12px)' }}>
+                <div style={{ color: 'white', fontWeight: 800, fontSize: 24, marginBottom: 8 }}>{stat.value}</div>
+                <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13, fontWeight: 500 }}>{stat.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+
+        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} style={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', color: 'rgba(255,255,255,0.4)', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+          <span style={{ fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Scroll to explore</span>
+          <ChevronDown size={18} />
         </motion.div>
       </section>
 
-      {/* 2. Impact Statistics */}
-      <section className="py-16 px-6 -mt-10 relative z-20">
-        <motion.div 
-          className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          <motion.div variants={staggerItem}><StatCard number="25+" label="Startups Supported" icon={Rocket} /></motion.div>
-          <motion.div variants={staggerItem}><StatCard number="40+" label="Mentors" icon={Users} /></motion.div>
-          <motion.div variants={staggerItem}><StatCard number="10+" label="Programs" icon={Target} /></motion.div>
-          <motion.div variants={staggerItem}><StatCard number="15+" label="Partnerships" icon={Building2} /></motion.div>
+      {/* Stats Section */}
+      <section id="stats-section" style={{ background: '#FFFFFF', padding: '80px 24px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40, textAlign: 'center' }}>
+             {[
+               { num: 78, suffix: '+', label: 'Years of NIE Excellence' },
+               { num: 6, suffix: '', label: 'Focus Innovation Sectors' },
+               { num: 5, suffix: '+', label: 'Facilities & Resources' },
+               { val: 'Tier 2', label: 'Region Impact Focus' }
+             ].map((s, i) => (
+               <motion.div key={i} variants={cardItem} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                 <div style={{ fontSize: 'clamp(36px, 4vw, 56px)', fontWeight: 800, color: 'var(--blue-dark)', borderBottom: '2px solid var(--orange)', paddingBottom: 8, marginBottom: 16 }}>
+                   {s.num ? s.num : s.val}{s.suffix}
+                 </div>
+                 <div style={{ fontSize: 12, textTransform: 'uppercase', color: 'var(--gray-text)', fontWeight: 600, letterSpacing: '0.05em' }}>{s.label}</div>
+               </motion.div>
+             ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Focus Sectors */}
+      <section style={{ background: 'var(--gray-light)', padding: '80px 24px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} variants={fadeUp} style={{ textAlign: 'center', marginBottom: 48 }}>
+            <h2 style={{ fontSize: 'clamp(26px, 3vw, 42px)', background: 'linear-gradient(135deg, #0D2B6E 0%, #2E5FD9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: 16 }}>Focus Innovation Sectors</h2>
+            <p style={{ color: 'var(--gray-text)', fontSize: 16 }}>We specialize in deep-tech domains addressing global challenges.</p>
+          </motion.div>
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }} className="grid-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))' }}>
+            {[
+              { icon: Leaf, label: 'AgriTech', c: 'blue' },
+              { icon: Zap, label: 'Clean Energy & EV', c: 'orange' },
+              { icon: Cpu, label: 'AI & ML', c: 'blue' },
+              { icon: Recycle, label: 'Waste to Wealth', c: 'orange' },
+              { icon: Globe, label: 'Climate Tech', c: 'blue' },
+              { icon: Wrench, label: 'Makerspace', c: 'orange' },
+            ].map((sec, i) => (
+              <motion.div key={i} variants={cardItem} whileHover={{ y: -8, boxShadow: '0 12px 32px rgba(13,43,110,0.1)' }} style={{ background: 'white', borderRadius: 16, border: '1px solid #E8ECF8', padding: '32px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', cursor: 'pointer' }}>
+                <div style={{ width: 48, height: 48, borderRadius: 12, background: sec.c === 'blue' ? 'rgba(46,95,217,0.12)' : 'rgba(245,130,31,0.18)', color: sec.c === 'blue' ? 'var(--blue-light)' : 'var(--orange)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24 }}>
+                  <sec.icon size={22} />
+                </div>
+                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: 14, color: 'var(--blue-dark)' }}>{sec.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA Banner */}
+      <section style={{ background: 'linear-gradient(135deg, #0D2B6E 0%, #1A3F9F 100%)', padding: '80px 24px', textAlign: 'center', color: 'white' }}>
+        <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}>
+          <h2 style={{ fontSize: 'clamp(26px, 3vw, 42px)', color: 'white', marginBottom: 16 }}>Applications Are Now Open</h2>
+          <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 18, marginBottom: 40, maxWidth: 600, margin: '0 auto 40px' }}>Join NIETBI and take your startup from idea to commercialization.</p>
+          <Link to="/apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)', color: '#fff', padding: '16px 36px', borderRadius: 8, textDecoration: 'none', fontWeight: 700, fontSize: 16, boxShadow: '0 4px 20px rgba(245,130,31,0.4)' }}>
+            Apply for Incubation →
+          </Link>
         </motion.div>
       </section>
-
-      {/* 3. Focus Areas */}
-      <section className="py-16 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader title="Our Focus Areas" description="We specialize in supporting startups across high-growth, high-impact sectors driven by technology and research." align="center" />
-          <motion.div 
-            className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center mt-12"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            <motion.div variants={staggerItem} className="p-6 bg-slate-50 rounded-lg border border-slate-100 flex flex-col items-center hover:-translate-y-2 hover:shadow-md transition-all duration-300">
-              <Sprout className="w-12 h-12 text-nie-orange mb-4" />
-              <h3 className="font-bold text-nie-navy">Agritech</h3>
-            </motion.div>
-            <motion.div variants={staggerItem} className="p-6 bg-slate-50 rounded-lg border border-slate-100 flex flex-col items-center hover:-translate-y-2 hover:shadow-md transition-all duration-300">
-              <Cpu className="w-12 h-12 text-nie-orange mb-4" />
-              <h3 className="font-bold text-nie-navy">DeepTech</h3>
-            </motion.div>
-            <motion.div variants={staggerItem} className="p-6 bg-slate-50 rounded-lg border border-slate-100 flex flex-col items-center hover:-translate-y-2 hover:shadow-md transition-all duration-300">
-              <Wrench className="w-12 h-12 text-nie-orange mb-4" />
-              <h3 className="font-bold text-nie-navy">Manufacturing</h3>
-            </motion.div>
-            <motion.div variants={staggerItem} className="p-6 bg-slate-50 rounded-lg border border-slate-100 flex flex-col items-center hover:-translate-y-2 hover:shadow-md transition-all duration-300">
-              <Leaf className="w-12 h-12 text-nie-orange mb-4" />
-              <h3 className="font-bold text-nie-navy">Sustainability</h3>
-            </motion.div>
-            <motion.div variants={staggerItem} className="p-6 bg-slate-50 rounded-lg border border-slate-100 flex flex-col items-center hover:-translate-y-2 hover:shadow-md transition-all duration-300">
-              <Network className="w-12 h-12 text-nie-orange mb-4" />
-              <h3 className="font-bold text-nie-navy">AI & Digital</h3>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 4. Programs Preview */}
-      <section className="py-16 px-6 bg-bg-light">
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader title="Incubation Programs" description="Structured pathways designed to take your idea from concept to commercialization." />
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            <motion.div variants={staggerItem} className="bg-white p-8 rounded-lg shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-              <h3 className="text-xl font-bold text-nie-navy mb-3">Pre-Incubation</h3>
-              <p className="text-text-body mb-6">Validate your idea, build a prototype, and establish market feasibility with expert guidance.</p>
-              <Button variant="outline" className="w-full" asChild><Link to="/programs">Learn More</Link></Button>
-            </motion.div>
-            <motion.div variants={staggerItem} className="bg-white p-8 rounded-lg shadow-sm border border-nie-orange border-t-4 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-              <h3 className="text-xl font-bold text-nie-navy mb-3">Incubation</h3>
-              <p className="text-text-body mb-6">Scale your early-stage startup with funding access, workspace, and dedicated mentorship.</p>
-              <Button variant="primary" className="w-full" asChild><Link to="/programs">Learn More</Link></Button>
-            </motion.div>
-            <motion.div variants={staggerItem} className="bg-white p-8 rounded-lg shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-              <h3 className="text-xl font-bold text-nie-navy mb-3">Mentorship</h3>
-              <p className="text-text-body mb-6">Get connected with industry veterans, academic experts, and successful alumni entrepreneurs.</p>
-              <Button variant="outline" className="w-full" asChild><Link to="/programs">Learn More</Link></Button>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 5. Featured Startups Preview */}
-      <section className="py-16 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-end mb-10">
-            <SectionHeader title="Featured Startups" description="Discover the innovative companies building the future at NIETBI." />
-            <Button variant="outline" className="mb-10 hidden md:inline-flex" asChild><Link to="/startups">View All Startups</Link></Button>
-          </div>
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            {loadingStartups ? (
-              [...Array(3)].map((_, i) => (
-                <motion.div key={i} variants={staggerItem} className="h-[380px] bg-slate-100 animate-pulse rounded-lg"></motion.div>
-              ))
-            ) : featuredStartups?.length > 0 ? (
-              featuredStartups.map(startup => (
-                <motion.div key={startup.id} variants={staggerItem}>
-                  <StartupCard 
-                    name={startup.name} 
-                    sector={startup.sector} 
-                    description={startup.description}
-                    logo={startup.logo_url}
-                    websiteLink={startup.website_link}
-                    featured={startup.is_featured}
-                  />
-                </motion.div>
-              ))
-            ) : (
-              <p className="col-span-3 text-center text-slate-500">No featured startups to display yet.</p>
-            )}
-          </motion.div>
-          <div className="mt-8 text-center md:hidden">
-             <Button variant="outline" asChild><Link to="/startups">View All Startups</Link></Button>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Infrastructure Preview */}
-      <section className="py-16 px-6 bg-bg-light">
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader title="World-Class Infrastructure" description="State-of-the-art facilities providing everything you need to build your product." />
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            {loadingInfrastructure ? (
-              [...Array(3)].map((_, i) => (
-                <motion.div key={i} variants={staggerItem} className="h-[300px] bg-slate-200 animate-pulse rounded-lg"></motion.div>
-              ))
-            ) : infrastructure?.length > 0 ? (
-              infrastructure.map(item => (
-                <motion.div key={item.id} variants={staggerItem}>
-                  <InfrastructureCard 
-                    title={item.title} 
-                    description={item.description}
-                    image={item.image_url}
-                  />
-                </motion.div>
-              ))
-            ) : (
-              <p className="col-span-3 text-center text-slate-500">Infrastructure details coming soon.</p>
-            )}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 7. Featured Events Preview */}
-      <section className="py-16 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-end mb-10">
-            <SectionHeader title="Upcoming Events" description="Join our community of innovators, investors, and industry experts." />
-            <Button variant="outline" className="mb-10 hidden md:inline-flex" asChild><Link to="/events">View All Events</Link></Button>
-          </div>
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            {loadingEvents ? (
-              [...Array(3)].map((_, i) => (
-                <motion.div key={i} variants={staggerItem} className="h-[400px] bg-slate-100 animate-pulse rounded-lg"></motion.div>
-              ))
-            ) : upcomingEvents?.length > 0 ? (
-              upcomingEvents.map(event => (
-                <motion.div key={event.id} variants={staggerItem}>
-                  <EventCard 
-                    title={event.title} 
-                    date={new Date(event.event_start_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} 
-                    description={event.description}
-                    banner={event.banner_url}
-                    status={event.status}
-                  />
-                </motion.div>
-              ))
-            ) : (
-              <p className="col-span-3 text-center text-slate-500">No upcoming events currently scheduled.</p>
-            )}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 8. Final CTA Section */}
-      <CTASection 
-        title="Ready to Build Your Startup?" 
-        description="Join NIETBI to access funding, mentorship, and world-class infrastructure."
-        primaryText="Apply for Incubation"
-        primaryAction={() => console.log("Apply clicked")}
-        secondaryText="Contact Us"
-        secondaryAction={() => console.log("Contact clicked")}
-      />
     </div>
   );
-};
-
-export default Home;
+}

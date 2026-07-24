@@ -1,0 +1,100 @@
+import React, { useState } from 'react';
+import SEOHead from '../../components/system/SEOHead';
+import { motion } from 'framer-motion';
+import PageHero from '../../components/page-structure/PageHero';
+import StartupCard from '../../components/data-display/StartupCard';
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
+import CardSkeleton from '../../components/system/CardSkeleton';
+import EmptyState from '../../components/system/EmptyState';
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+
+export default function Alumni() {
+  const [search, setSearch] = useState('');
+  const [sector, setSector] = useState('');
+
+  const startups = useQuery(api.startups.listStartups, { 
+    stage: "graduated",
+    isPublished: true 
+  });
+
+  const isLoading = startups === undefined;
+  
+  const filteredStartups = startups?.filter(s => {
+    const matchesSearch = s.name.toLowerCase().includes(search.toLowerCase());
+    const matchesSector = sector === 'All' || s.sector === sector;
+    return matchesSearch && matchesSector;
+  });
+
+  return (
+    <div className="bg-bg-light min-h-screen pb-20">
+      <SEOHead title="Alumni Startups" description="Celebrating the graduated startups of NIETBI." />
+      <PageHero title="Alumni Founders" subtitle="Celebrating the startups that graduated from NIETBI and are scaling globally." breadcrumb="Home > Alumni" />
+      
+      <div className="max-w-7xl mx-auto px-6 pt-12">
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100 flex flex-col md:flex-row justify-end items-center gap-4 mb-10">
+          <div className="flex gap-4 w-full md:w-auto">
+            <input 
+              type="text" 
+              placeholder="Search by name..." 
+              className="px-4 py-2 border border-slate-200 rounded-md text-sm w-full md:w-64 focus:outline-none focus:border-nie-orange"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <select 
+              className="px-4 py-2 border border-slate-200 rounded-md text-sm bg-white focus:outline-none focus:border-nie-orange"
+              value={sector}
+              onChange={(e) => setSector(e.target.value)}
+            >
+              <option value="All">All Sectors</option>
+              <option value="Agritech">Agritech</option>
+              <option value="DeepTech">DeepTech</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="Sustainability">Sustainability</option>
+              <option value="AI & Digital">AI & Digital</option>
+            </select>
+          </div>
+        </div>
+
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <CardSkeleton /><CardSkeleton /><CardSkeleton />
+          </div>
+        ) : !filteredStartups || filteredStartups.length === 0 ? (
+          <EmptyState title="No alumni found" message="Try adjusting your search or filter criteria." />
+        ) : (
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="show"
+          >
+            {filteredStartups.map(startup => (
+              <motion.div key={startup._id} variants={staggerItem}>
+                <StartupCard 
+                  name={startup.name}
+                  logo={startup.logoUrl || startup.logo_url}
+                  sector={startup.sector}
+                  description={startup.description}
+                  websiteLink={startup.website || startup.website_link}
+                  featured={startup.is_featured}
+                  foundedYear={startup.foundedYear}
+                  isGraduated={true}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </div>
+    </div>
+  );
+}

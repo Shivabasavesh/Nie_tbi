@@ -131,7 +131,7 @@ const AdminBlogs = () => {
         <div className="flex items-center">
           <div className="h-10 w-16 flex-shrink-0">
             {row.featured_image ? (
-              <img className="h-10 w-16 rounded object-cover" src={row.featured_image} alt="" />
+              <img className="h-10 w-16 rounded object-cover" loading="lazy" width="64" height="40" src={row.featured_image} alt="" />
             ) : (
               <div className="h-10 w-16 rounded bg-gray-200 flex items-center justify-center text-gray-500 font-bold">
                 IMG

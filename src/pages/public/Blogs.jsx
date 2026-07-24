@@ -3,16 +3,16 @@ import React
  from 'react';
 import PageHero from '../../components/page-structure/PageHero';
 import BlogCard from '../../components/data-display/BlogCard';
-import { useSupabaseTable } from '../../hooks/useSupabaseData';
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 import CardSkeleton from '../../components/system/CardSkeleton';
 import EmptyState from '../../components/system/EmptyState';
 import ErrorState from '../../components/system/ErrorState';
 
 const Blogs = () => {
-  const { data: blogs, isLoading, isError, refetch } = useSupabaseTable('blogs', {
-    filter: { status: 'Published' },
-    order: { column: 'created_at', ascending: false }
-  });
+  const blogs = useQuery(api.posts.listPosts);
+  const isLoading = blogs === undefined;
+  const isError = false; // useQuery handles error inherently unless wrapped in ErrorBoundary
 
   return (
     <div className="bg-bg-light min-h-screen pb-20">
@@ -32,13 +32,14 @@ const Blogs = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {blogs.map(blog => (
               <BlogCard 
-                key={blog.id} 
+                key={blog._id} 
                 title={blog.title} 
                 author={blog.author} 
-                publishDate={new Date(blog.created_at).toLocaleDateString()} 
+                publishDate={new Date(blog.publishedAt).toLocaleDateString()} 
                 featuredImage={blog.featured_image} 
                 slug={blog.slug}
                 featured={blog.is_featured} 
+                tags={blog.tags}
               />
             ))}
           </div>

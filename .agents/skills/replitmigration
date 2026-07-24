@@ -1,0 +1,1381 @@
+# NIETBI Website — Complete Master Reference
+### For Antigravity IDE + Convex Backend Recreation
+
+> **How to use this document:** Paste the relevant section into your Antigravity IDE AI at the start of each work session. Everything needed to exactly recreate the Replit prototype is here.
+
+---
+
+## PART 1 — COLOR SCHEMA (Complete)
+
+### Primary Brand Palette — CSS Variables
+```css
+:root {
+  /* Blues */
+  --blue-dark:    #0D2B6E;   /* Deep navy — headings, footer bg */
+  --blue-mid:     #1A3F9F;   /* Mid blue — borders, CTA gradient start */
+  --blue-light:   #2E5FD9;   /* Accent blue — icons, links, gradient end */
+
+  /* Oranges */
+  --orange:       #F5821F;   /* Primary CTA — buttons, accents, icons */
+  --orange-light: #FF9A3C;   /* Secondary orange — gradient end on buttons */
+
+  /* Neutrals */
+  --white:        #FFFFFF;
+  --gray-light:   #F4F6FB;   /* Alternate section background */
+  --gray-text:    #555E7B;   /* Body text, descriptions */
+  --black:        #0A0A0A;
+}
+```
+
+### Dark Hero Background
+```
+Hero sections:      #060E24   (near-black navy)
+CTA gradient bg:    linear-gradient(135deg, #0D2B6E 0%, #1A3F9F 100%)
+Contact hero:       linear-gradient(135deg, #0D2B6E 0%, #1A3F9F 60%, #2E5FD9 100%)
+```
+
+### Gradient Recipes
+```
+Orange button:      linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)
+Blue heading text:  linear-gradient(135deg, #0D2B6E 0%, #2E5FD9 100%)
+White heading text: linear-gradient(135deg, #FFFFFF 0%, #A8C4FF 100%)
+Footer accent line: linear-gradient(90deg, #F5821F 0%, #FF9A3C 100%)
+Timeline line:      linear-gradient(90deg, #2E5FD9, #F5821F)
+Vertical timeline:  linear-gradient(180deg, #2E5FD9 0%, #F5821F 100%)
+Logo underline:     linear-gradient(90deg, #2E5FD9, #F5821F)
+```
+
+### Glassmorphism (Dark Hero Cards)
+```
+Background:         rgba(255,255,255,0.05)
+Border:             1px solid rgba(255,255,255,0.15)
+Backdrop filter:    blur(12px)
+Border radius:      16px
+```
+
+### Section Background Alternation Pattern
+```
+1. Hero             → #060E24 (dark navy)
+2. Stats            → #FFFFFF (white)
+3. Focus Sectors    → #F4F6FB (gray-light)
+4. What We Offer    → #0D2B6E (blue-dark)
+5. How to Apply     → #FFFFFF
+6. Achievements     → #F4F6FB
+7. CTA Banner       → linear-gradient(135deg, #0D2B6E, #1A3F9F)
+```
+
+### Card Styles
+```
+Light card:     background #fff, border 1px solid #E8ECF8, border-radius 16-18px
+                box-shadow: 0 2px 12px rgba(13,43,110,0.05)
+Dark card:      background rgba(255,255,255,0.06), border 1px solid rgba(255,255,255,0.1)
+Hover shadow:   0 12px 32px rgba(13,43,110,0.10)  (light)
+                0 16px 48px rgba(13,43,110,0.12)  (strong)
+```
+
+---
+
+## PART 2 — TYPOGRAPHY SYSTEM
+
+### Font Stack
+```css
+--font-heading: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+--font-body:    'Inter', sans-serif;
+
+/* Google Fonts import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap');
+```
+
+### Fluid Type Scale (clamp values used everywhere)
+```
+Hero H1:    clamp(36px, 4.5vw, 64px)   weight 800
+Page H1:    clamp(28px, 4vw, 52px)     weight 800
+Section H2: clamp(26px, 3vw, 42px)     weight 700
+Sub H2:     clamp(22px, 2.5vw, 34px)   weight 700
+H3:         16-22px                     weight 700
+Body large: clamp(15px, 1.4vw, 18px)   weight 400, line-height 1.7
+Body:       14-16px                     weight 400, line-height 1.65-1.8
+Small:      12-13px                     weight 500-600
+Label/tag:  11-12px                     weight 600-700, letter-spacing 0.04-0.1em
+```
+
+### Text Gradient Pattern (heading text)
+```tsx
+// Blue gradient heading (on white sections)
+style={{
+  background: "linear-gradient(135deg, #0D2B6E 0%, #2E5FD9 100%)",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+}}
+
+// White gradient heading (on dark sections)
+style={{
+  background: "linear-gradient(135deg, #FFFFFF 0%, #A8C4FF 100%)",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+}}
+
+// Orange gradient heading
+style={{
+  background: "linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+}}
+```
+
+---
+
+## PART 3 — ANIMATION SYSTEM
+
+### 3.1 App-Level Setup (App.tsx)
+
+```tsx
+// AOS — re-init on every route change (so animations replay)
+function AOSHandler() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    AOS.init({ duration: 600, once: false, offset: 80 });
+    AOS.refresh();
+  }, [pathname]);
+  return null;
+}
+
+// Lenis smooth scroll — desktop only, reset scroll on route change
+function SmoothScroll() {
+  const lenisRef = useRef<Lenis | null>(null);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    if (window.innerWidth < 640) return; // Mobile: no Lenis
+
+    lenisRef.current = new Lenis({
+      duration: 1.2,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+
+    let active = true;
+    function raf(time: number) {
+      if (!active) return;
+      lenisRef.current?.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    return () => {
+      active = false;
+      lenisRef.current?.destroy();
+      lenisRef.current = null;
+    };
+  }, [pathname]);
+
+  return null;
+}
+
+// Page transitions — opacity only (no y offset = no layout jump)
+const pageVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.2, ease: "easeInOut" } },
+  exit:    { opacity: 0, transition: { duration: 0.2 } },
+};
+```
+
+### 3.2 Framer Motion — Reusable Variants
+
+```tsx
+// Fade up (most common — used for section headings, general content)
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
+
+// Staggered container + child items
+const containerVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.13 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
+
+// Card stagger (used for grid layouts)
+const cardStagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09 } },
+};
+const cardItem = {
+  hidden: { opacity: 0, y: 30 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
+// Slide from right (hero stat cards)
+const cardVariants = {
+  hidden: { opacity: 0, x: 40 },
+  show: (i: number) => ({
+    opacity: 1, x: 0,
+    transition: { delay: i * 0.12, duration: 0.6, ease: "easeOut" },
+  }),
+};
+
+// Slide in from left / right (two-column sections)
+const slideLeft  = { hidden: { opacity: 0, x: -40 }, show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } } };
+const slideRight = { hidden: { opacity: 0, x:  40 }, show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } } };
+
+// Mobile menu items
+const menuItemVariants = {
+  hidden: { opacity: 0, x: -16 },
+  show: (i: number) => ({ opacity: 1, x: 0, transition: { delay: i * 0.05, duration: 0.25, ease: "easeOut" } }),
+};
+```
+
+### 3.3 Floating Gradient Orbs (Hero Decoration)
+
+```tsx
+// Blue orb — top-left (main hero)
+<motion.div
+  animate={{ y: [0, -24, 0] }}
+  transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+  style={{
+    position: "absolute", top: "-10%", left: "-8%",
+    width: 600, height: 600, borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(46,95,217,0.35) 0%, transparent 70%)",
+    filter: "blur(60px)", pointerEvents: "none",
+  }}
+/>
+
+// Orange orb — bottom-right (main hero)
+<motion.div
+  animate={{ y: [0, 20, 0] }}
+  transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+  style={{
+    position: "absolute", bottom: "-15%", right: "-5%",
+    width: 500, height: 500, borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(245,130,31,0.3) 0%, transparent 70%)",
+    filter: "blur(70px)", pointerEvents: "none",
+  }}
+/>
+
+// Mid blue orb — center right (main hero)
+<motion.div
+  animate={{ y: [0, -16, 0] }}
+  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+  style={{
+    position: "absolute", top: "35%", right: "30%",
+    width: 360, height: 360, borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(30,74,180,0.25) 0%, transparent 70%)",
+    filter: "blur(80px)", pointerEvents: "none",
+  }}
+/>
+
+// Simpler orb pattern (inner pages hero)
+<motion.div
+  animate={{ y: [0, -20, 0] }}
+  transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+  style={{
+    position: "absolute", top: "-20%", right: "-10%",
+    width: 400, height: 400, borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(46,95,217,0.3) 0%, transparent 70%)",
+    filter: "blur(60px)", pointerEvents: "none",
+  }}
+/>
+```
+
+### 3.4 Scroll-triggered Animations (Standard Pattern)
+
+```tsx
+// Always use: initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }}
+// For grids: add variants with staggerChildren
+
+<motion.div
+  initial="hidden"
+  whileInView="show"
+  viewport={{ once: true, margin: "-100px" }}
+  variants={fadeUp}
+>
+  Section heading here
+</motion.div>
+
+// Grid with stagger:
+<motion.div
+  initial="hidden"
+  whileInView="show"
+  viewport={{ once: true, margin: "-100px" }}
+  variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
+  style={{ display: "grid", ... }}
+>
+  {items.map(item => (
+    <motion.div key={item.id} variants={cardItem}>
+      ...card content
+    </motion.div>
+  ))}
+</motion.div>
+```
+
+### 3.5 Hover Animations
+
+```tsx
+// Card lift
+whileHover={{ y: -4, boxShadow: "0 12px 32px rgba(13,43,110,0.1)" }}
+
+// Card strong lift
+whileHover={{ y: -6, boxShadow: "0 16px 48px rgba(13,43,110,0.12)" }}
+
+// Button scale
+whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+
+// Button strong hover (CTA)
+whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
+
+// ScrollToTop button
+whileHover={{ scale: 1.12, boxShadow: "0 8px 36px rgba(245,130,31,0.55)" }}
+whileTap={{ scale: 0.93 }}
+```
+
+### 3.6 Apply Page — Animated Timeline Line
+
+```tsx
+const lineRef = useRef(null);
+const lineInView = useInView(lineRef, { once: true, amount: 0.4 });
+
+// Static grey line (background)
+<div style={{
+  position: "absolute", top: 27, left: "12.5%", right: "12.5%",
+  height: 2, background: "#E8ECF8", zIndex: 0,
+}} />
+
+// Animated gradient line (foreground, scales in from left)
+<motion.div
+  initial={{ scaleX: 0 }}
+  animate={lineInView ? { scaleX: 1 } : { scaleX: 0 }}
+  transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+  style={{
+    position: "absolute", top: 27, left: "12.5%", right: "12.5%",
+    height: 2,
+    background: "linear-gradient(90deg, #2E5FD9, #F5821F)",
+    transformOrigin: "left",
+    zIndex: 1,
+  }}
+/>
+```
+
+### 3.7 AOS Attributes (used sparingly in some pages)
+
+```
+data-aos="fade-right"   → slides in from left
+data-aos="fade-left"    → slides in from right
+data-aos="fade-up"      → fades up
+Settings: duration 600, once: false, offset: 80
+```
+
+### 3.8 Scroll Indicator (Hero Bottom)
+
+```tsx
+<motion.div
+  animate={{ y: [0, 8, 0] }}
+  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+  style={{
+    position: "absolute", bottom: 32, left: "50%",
+    transform: "translateX(-50%)",
+    color: "rgba(255,255,255,0.4)", zIndex: 1,
+    display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+  }}
+>
+  <span style={{ fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+    Scroll to explore
+  </span>
+  <ChevronDown size={18} />
+</motion.div>
+```
+
+### 3.9 Loading Screen
+
+```tsx
+// 1.2s full-screen navy overlay with NIET + BI brand text
+// Fades out with opacity 0, duration 0.4s easeInOut
+// Text: "NIE" white + "TBI" orange, Poppins 800 40px, letter-spacing 0.08em
+// Below: 3px gradient line (blue-light → orange)
+// Below: "NIE Technology Business Incubator" — Inter 13px, rgba(255,255,255,0.5)
+```
+
+### 3.10 Announcement Banner
+
+```tsx
+// Fixed top, zIndex 1100, above navbar
+// Orange gradient: linear-gradient(90deg, #F5821F 0%, #FF9A3C 100%)
+// Height: 44px stored as --banner-h CSS variable
+// Slides in: height 0→44 + opacity 0→1, duration 0.35s easeOut
+// Content: full text desktop / short text mobile
+// Desktop: "🎉 Applications are now open for NIETBI Incubation Program 2025" + "Apply Now →"
+// Mobile:  "Applications Now Open — NIETBI 2025" + "Apply Now →"
+// Dismiss: X button (top-right), sets sessionStorage "nieTbiBannerDismissed" = "1"
+```
+
+---
+
+## PART 4 — LAYOUT PATTERNS
+
+### 4.1 Navbar Layout
+```
+Position: fixed, top: var(--banner-h, 0px), zIndex 1000
+Height: 68px
+Max-width: 1200px, padding: 0 24px
+Transparent → rgba(255,255,255,0.98) on scroll (threshold: 40px)
+Box-shadow on scroll: 0 2px 24px rgba(13,43,110,0.10)
+Mobile breakpoint: 768px — hamburger menu replaces nav links
+
+Logo: 44px circular container (white bg) + NIE logo (36px)
+      + NIETBI text (Poppins 800 18px) + subtitle (Inter 11px)
+Active link: color var(--orange) + orange underline 2px border-radius 2
+Mobile menu: full-height white panel, fades in, staggered links
+             "Apply for Incubation →" orange button pinned to bottom
+```
+
+### 4.2 Hero Section Pattern (Home)
+```
+Height: 100dvh
+Background: #060E24
+padding-top: calc(68px + var(--banner-h, 0px))
+
+Layout: 2-column grid (1fr 1fr), gap 60px
+  Left: staggered animation group
+    - Pill badge (glassmorphism)
+    - H1 (white gradient "Turning Ideas Into" + orange gradient "Impact.")
+    - Subtext (#A0AECF)
+    - 2 CTA buttons (orange solid + ghost)
+  Right: 2x2 glassmorphism stat grid (maxWidth 380px)
+
+Background: 3 floating gradient orbs (blue top-left, orange bottom-right, mid-blue center)
+Bottom: bouncing scroll indicator
+
+Mobile (≤900px): single column, right grid hidden
+```
+
+### 4.3 Inner Page Hero Pattern
+```
+Background: #060E24
+Padding: calc(120px + var(--banner-h, 0px)) 24px 60px
+Text-align: center
+
+Content (centered, zIndex 1):
+  - Breadcrumb: "Home > Page Name" — rgba(255,255,255,0.45) 13px
+  - H1: white gradient, clamp(28px, 4vw, 52px), weight 800
+  - Subtitle: #A0AECF, 17px, maxWidth 520px
+
+Background: 1-2 floating orbs (simpler than home)
+```
+
+### 4.4 Standard Section Pattern
+```tsx
+<section style={{ background: "[alternating color]", padding: "80px 24px" }}>
+  <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+    
+    {/* Section heading — always centered, always animated */}
+    <motion.div
+      initial="hidden" whileInView="show"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={fadeUp}
+      style={{ textAlign: "center", marginBottom: 48 }}
+    >
+      <h2 style={{ /* blue gradient */ }}>Section Title</h2>
+      <p style={{ color: "var(--gray-text)", fontSize: 16 }}>Subtitle</p>
+    </motion.div>
+
+    {/* Content grid */}
+  </div>
+</section>
+```
+
+### 4.5 Card Grid Patterns
+```
+2-col (offers, mission/vision):  grid-template-columns: 1fr 1fr
+3-col (offers preview):          repeat(auto-fit, minmax(260px, 1fr))
+4-col (faculty, stats):          repeat(4, 1fr)  → 2-col on tablet → 1-col mobile
+6-col (sectors):                 repeat(auto-fit, minmax(170px, 1fr))
+Auto-fit cards (generic):        repeat(auto-fit, minmax(220px, 1fr))
+```
+
+### 4.6 Two-Column Split (left text + right card/form)
+```
+className="two-col"
+grid-template-columns: 1fr 1fr, gap: 60px
+Left: fadeInX(-40)  Right: fadeInX(+40)
+Mobile: grid-template-columns: 1fr (stacks vertically)
+```
+
+### 4.7 Orange CTA Button Style
+```tsx
+style={{
+  display: "inline-flex", alignItems: "center", gap: 8,
+  background: "linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)",
+  color: "#fff",
+  padding: "14px 32px",    // Large: "16px 36px"
+  borderRadius: 8,
+  textDecoration: "none",
+  fontWeight: 700, fontSize: 15,
+  fontFamily: "var(--font-body)",
+  boxShadow: "0 4px 20px rgba(245,130,31,0.4)",
+}}
+```
+
+### 4.8 Ghost / Outline Button Style
+```tsx
+style={{
+  display: "inline-flex", alignItems: "center", gap: 8,
+  background: "transparent",
+  color: "#fff",                     // or "var(--blue-dark)" on light bg
+  padding: "14px 28px",
+  borderRadius: 8,
+  textDecoration: "none",
+  fontWeight: 600, fontSize: 15,
+  border: "1px solid rgba(255,255,255,0.3)",  // or "2px solid var(--blue-mid)"
+  backdropFilter: "blur(8px)",
+}}
+```
+
+### 4.9 Icon Box Pattern
+```tsx
+// Blue icon box
+<div style={{
+  width: 48, height: 48, borderRadius: 12,
+  background: "rgba(46,95,217,0.12)",
+  display: "flex", alignItems: "center", justifyContent: "center",
+  color: "var(--blue-light)",
+}}>
+  <Icon size={22} />
+</div>
+
+// Orange icon box
+<div style={{
+  width: 52, height: 52, borderRadius: 14,
+  background: "rgba(245,130,31,0.18)",
+  display: "flex", alignItems: "center", justifyContent: "center",
+  color: "var(--orange)",
+}}>
+  <Icon size={26} />
+</div>
+```
+
+### 4.10 Footer Layout
+```
+Background: #060E24
+Orange accent line at top: 2px, linear-gradient(90deg, #F5821F, #FF9A3C)
+4-column grid: Brand | Quick Links | Focus Areas | Contact
+Mobile: accordion on Quick Links + Focus Areas, center brand
+Bottom bar: © year + NIE info, space-between on desktop / center on mobile
+```
+
+---
+
+## PART 5 — COMPLETE PAGE-BY-PAGE CONTENT
+
+### PAGE 1: Home (/home)
+**SEO:** "NIETBI — NIE Technology Business Incubator, Mysuru"
+**Meta:** "Apply for incubation at NIETBI. Supporting AI-driven startups in AgriTech, Clean Energy, AI & ML under Govt. of Karnataka TBI 2.0 Programme."
+
+**Hero Stats (2x2 glassmorphism grid):**
+```
+Est. 1946  →  NIE Mysuru
+6+         →  Focus Sectors
+TBI 2.0    →  Govt. Karnataka
+₹ Funded   →  Startup Support
+```
+
+**Hero H1:** "Turning Ideas Into Impact."
+- "Turning Ideas Into" — white gradient
+- "Impact." — orange gradient
+**Hero body:** "Empowering deep-tech startups in AgriTech, Clean Energy, Sustainable Technologies and AI & ML from Mysuru and beyond."
+**Pill badge:** "🏛 TBI 2.0 Programme — Govt. of Karnataka"
+**Buttons:** "Apply Now →" (orange) + "Learn More" (ghost, scrolls to #stats-section)
+
+**Stats Counter Section (4 columns, white section):**
+```
+78+   →  Years of NIE Excellence      (CountUp, duration 2.2s)
+6     →  Focus Innovation Sectors     (CountUp)
+5+    →  Facilities & Resources       (CountUp)
+Tier 2 →  Region Impact Focus         (static text)
+```
+Style: large number (clamp 36-56px, blue-dark), orange bottom border 2px, label uppercase 12px gray
+
+**Focus Sectors (6 cards, gray-light section):**
+```
+Icon: Leaf    → AgriTech                bg rgba(46,95,217,0.12)  color blue-light
+Icon: Zap     → Clean Energy & EV       bg rgba(245,130,31,0.12) color orange
+Icon: Cpu     → AI & ML                 bg rgba(46,95,217,0.12)  color blue-light
+Icon: Recycle → Waste to Wealth         bg rgba(245,130,31,0.12) color orange
+Icon: Globe   → Climate Tech            bg rgba(46,95,217,0.12)  color blue-light
+Icon: Wrench  → Makerspace              bg rgba(245,130,31,0.12) color orange
+```
+Card: white bg, 48px icon box, title Poppins 600 14px blue-dark, hover: y-4 shadow
+
+**What NIETBI Offers Preview (3 cards, dark blue section):**
+```
+Wrench → Co-Working Space     → "Collaborative, fully equipped workspace for your team"
+Cpu    → Expert Mentorship    → "Industry & academic mentor network for strategic guidance"
+Globe  → Market Connect       → "Connections to customers, partners, and investor networks"
+```
+Card: rgba(255,255,255,0.06) bg, orange icon box, button: "View All Offerings →"
+
+**How to Apply (4 steps, white section):**
+```
+1 → Scan & Apply    → "Fill online application form"
+2 → Screening       → "Expert panel reviews your application"
+3 → Pitch & Interview → "Present your idea to the selection committee"
+4 → Onboarding      → "Join NIETBI & start your journey"
+```
+Style: 56px orange circle with step number, title Poppins 700, staggered slide-in animation (x: -30→0)
+
+**Key Achievements (5 cards, gray-light):**
+```
+🏏 Startup   → SportsKPI                → "Leading analytics and live broadcasting platform for Indian sports."
+🏆 Award     → VS PRO TRADING ACADEMY  → "Innovative Startup of the Year 2024-25 from Karnataka Governor at Global India Business Forum."
+⭐ Recognition → IIC 4-Star Rating      → "Among 3,426 institutions, only 142 earned 4-Star nationally; 17 in South West region."
+💡 Hackathon  → Smart India Hackathon  → "Nodal center (2023-24) with direct interaction from PM Narendra Modi."
+🚀 Program    → National Boot Camp 2023 → "Mentoring program for early-stage startups and student entrepreneurs."
+```
+Card style: 5px colored top strip (blue/orange alternating), emoji large, category badge, title, desc
+
+**CTA Banner (gradient blue section):**
+Title: "Applications Are Now Open"
+Body: "Join NIETBI and take your startup from idea to commercialization."
+Button: "Apply for Incubation →" (orange)
+
+---
+
+### PAGE 2: About (/about)
+**SEO:** "About NIETBI | NIE Technology Business Incubator"
+**H1:** "About NIETBI"  **Breadcrumb:** "Home > About"
+
+**Section 1 — Who We Are (white, 2-col):**
+Left (slide-left): H2 "Who We Are" + 2 paragraphs
+```
+Para 1: "NIETBI — NIE Technology Business Incubator — is newly established under the Government of Karnataka TBI 2.0 Programme, supported by the Department of Electronics, IT, BT & S&T. Located at The National Institute of Engineering, Mysuru (Estd. 1946, Autonomous Institution), NIETBI is dedicated to fostering innovation, entrepreneurship, and technology-driven startups."
+Para 2: "We are a not-for-profit organization committed to building a strong, inclusive, and sustainable startup ecosystem in Mysuru and beyond — empowering innovators especially from Tier-2 and Tier-3 regions."
+```
+Right (slide-right): Dark navy card "Quick Facts"
+```
+Established    → 2024
+Type           → Not-for-Profit Incubator
+Supported by   → Govt. of Karnataka
+Programme      → TBI 2.0
+Host           → National Institute of Engineering, Mysuru
+Contact        → info@tbi.nie.ac.in
+```
+
+**Section 2 — Mission & Vision (gray-light, 2-col):**
+Left card (blue border-top 4px): Target icon, "Mission"
+```
+"To empower innovators and entrepreneurs with the right mentorship, infrastructure, funding support, and market access needed to scale impactful ventures."
+```
+Right card (orange border-top 4px): Eye icon, "Vision"
+```
+"To be the leading technology business incubator in Karnataka, catalyzing deep-tech innovation and building a sustainable startup ecosystem from Mysuru."
+```
+Cards: white bg, 48px icon box, hover: y-4 blue/orange shadow
+
+**Section 3 — NIEISC Overview (white, 2-col):**
+Left (dark navy card): Big quote mark (Georgia serif 52px orange)
+```
+Quote: "Creation of successful entrepreneurs through translation of knowledge into disruptive market technologies."
+Badge: "Our Vision" (orange gradient pill)
+```
+Right (gray-light card): "Our Mission" + 4 check points (CheckCircle2 orange)
+```
+✓ "Foster a culture of innovation and entrepreneurship among students and faculty"
+✓ "Provide mentorship, infrastructure, and funding to translate ideas into viable ventures"
+✓ "Bridge academia and industry through technology transfer and collaborative research"
+✓ "Create an ecosystem that nurtures startups from ideation to market entry"
+```
+
+**Section 4 — Our Journey (white, vertical timeline):**
+```
+1946   → "National Institute of Engineering established in Mysuru — laying the foundation for Karnataka's engineering education."
+2024   → "NIETBI formally established under the TBI 2.0 Programme by Dept. of Electronics, IT, BT & S&T, Govt. of Karnataka."
+2025   → "Applications open for the first cohort of startups. Focus on AgriTech, AI & ML, Clean Energy, and more."
+Future → "Building Karnataka's leading deep-tech incubation ecosystem — empowering innovators from Tier-2 cities."
+```
+Timeline: 2px gradient line (blue→orange) left side, orange dot (14px circle, orange bg, white border 3px, orange outline 2px), each entry slides in from right with stagger delay i*0.1
+
+**Section 5 — Government Support (gray-light, 3 cards):**
+```
+Building2 → K-Tech                        → "Karnataka Innovation & Technology Society"
+Users     → Startup Karnataka             → "State Startup Ecosystem Initiative"
+Mail      → Dept. of Electronics IT BT & S&T → "Govt. of Karnataka"
+```
+Card: white, 52px dark-navy icon box, center aligned
+
+**Section 6 — India Startup Context (gray-light, 4 stat cards):**
+```
+112,000+  → "DPIIT Recognised Startups (India)"    (CountUp, enableScrollSpy)
+3rd       → "Largest Startup Ecosystem Globally"    (static)
+750+      → "HEI-recognised Incubators (India)"     (CountUp)
+4-Star    → "NIE IIC Rating by MoE"                 (static)
+```
+Card: white, value in orange (clamp 28-40px), orange underline bar, gray desc
+Footer note: "Source: DPIIT, Startup India (2024)"
+Mobile: 2-col grid
+
+---
+
+### PAGE 3: Focus Areas (/focus-areas)
+**H1:** "Our Focus Areas"  **Breadcrumb:** "Home > Focus Areas"
+
+**6 Sectors (full cards with tags):**
+```
+01 Leaf    → AgriTech
+   "AI-driven precision farming, crop intelligence, and smart agriculture solutions for sustainable food production."
+   Tags: Precision Farming | Crop Intelligence | AI in Agriculture
+
+02 Zap     → Clean Energy & EV
+   "Solar energy, electric vehicles, battery storage systems, and clean technology for a sustainable future."
+   Tags: Solar | EV | Energy Storage | Clean Tech
+
+03 Cpu     → Artificial Intelligence & ML
+   "Deep learning, NLP, generative AI, and computer vision solutions transforming industries."
+   Tags: Deep Learning | NLP | GenAI | Computer Vision
+
+04 Recycle → Waste to Wealth
+   "Circular economy innovations, resource recovery, and sustainable waste management solutions."
+   Tags: Circular Economy | Resource Recovery | Sustainability
+
+05 Globe   → Climate & Sustainable Tech
+   "SDG-aligned environmental innovations and climate-resilient technologies for a greener planet."
+   Tags: SDG | Climate Tech | Green Innovation
+
+06 Wrench  → Incubation & Makerspace
+   "Hands-on product development, fabrication, and rapid prototyping lab for hardware startups."
+   Tags: Prototyping | Fabrication | Product Dev
+```
+Tag style: bg rgba(46,95,217,0.08) / rgba(245,130,31,0.08), color blue-dark/orange, 11px weight 600, pill shape
+Each card: large sector number (top right, 48px Poppins 800, very low opacity), icon box, title, desc, tags
+
+---
+
+### PAGE 4: What We Offer (/what-we-offer)
+**H1:** "What We Offer"  **Breadcrumb:** "Home > What We Offer"
+
+**6 Offering Cards:**
+```
+Building → Co-Working Space
+  "Collaborative, fully equipped workspace for your team — high-speed internet, meeting rooms, and dedicated desks."
+  Border: var(--blue-light)
+
+Users    → Expert Mentorship
+  "Industry & academic mentor network for strategic guidance on product, funding, operations, and growth."
+  Border: var(--orange)
+
+Globe    → Market Connect
+  "Connections to customers, partners, investors, and Karnataka's startup ecosystem to accelerate your go-to-market."
+  Border: var(--blue-light)
+
+Leaf     → Dedicated Land for Field Trials
+  "Physical space for AgriTech and CleanTech startups to validate their products in real field conditions."
+  Border: var(--orange)
+
+Wrench   → Makerspace & Fabrication Lab
+  "State-of-the-art prototyping, fabrication, and product development lab for hardware-first startups."
+  Border: var(--blue-light)
+
+BookOpen → Training Programs
+  "Bootcamps, workshops, masterclasses, and structured skill development sessions tailored for startup teams."
+  Border: var(--orange)
+```
+Card: white bg, colored left-border 3px (blue/orange alternating), icon box, title Poppins 700 18px, desc
+
+---
+
+### PAGE 5: Who Can Apply (/who-can-apply)
+**H1:** "Who Can Apply"  **Breadcrumb:** "Home > Who Can Apply"
+
+**Eligibility List (5 items, left column):**
+```
+✓ Startups & Entrepreneurs with AI-driven innovations across focus sectors
+✓ Student Innovators & Tech Teams from colleges and universities
+✓ Early-stage Startups in AgriTech, CleanTech, EV, Waste-to-Wealth, AI & ML
+✓ Deep-tech & Research Spinoffs seeking commercialisation support
+✓ Climate & Sustainability focused ventures with scalable solutions
+```
+Each item: CheckCircle2 orange icon + text, animate stagger on scroll
+
+**Focus Areas Preview (right column, 3 items):**
+```
+Leaf → AgriTech          (blue-mid color)
+Zap  → Energy (Clean Energy & EV)  (orange color)
+Cpu  → Artificial Intelligence (AI & ML)  (blue-light color)
+```
+
+**Download Section:**
+```
+H2: "Application Brochure"
+Body: "Download our complete incubation program brochure to learn more about eligibility, process, and expectations."
+Button: "Download Brochure" (Download icon)
+Link: to="/apply"  "Start Your Application →" (orange button)
+```
+
+---
+
+### PAGE 6: Apply (/apply)
+**H1:** "Apply for Incubation"  **Breadcrumb:** "Home > Apply"
+**Subtitle:** "Four simple steps to join NIETBI and start building the future"
+
+**4-Step Process (horizontal timeline, animated gradient line):**
+```
+1 → FileText    → Scan & Apply      → "Download the form, complete it and submit with your pitch deck"
+2 → ClipboardList → Screening       → "Expert panel evaluates your application and shortlists candidates"
+3 → Mic2        → Pitch & Interview → "Present your idea to the NIETBI selection committee"
+4 → Rocket      → Onboarding        → "Complete formalities and begin your incubation journey at NIETBI"
+```
+Node: 56px orange circle with step number + 4px orange glow shadow
+Icon: 44px gray-light box below node
+Timeline: grey line + animated blue→orange gradient line (scaleX 0→1, 1.2s, delay 0.2s)
+Mobile: Vertical timeline (left line, steps stack)
+
+**Ready to Apply Section (gray-light):**
+```
+H2: "Ready to Apply?"
+Body: "Take the first step towards building your startup with NIETBI's world-class support system."
+Buttons:
+  → "Apply Online →" (orange, opens Convex form or Google Form URL)
+  → "Download Pitch Deck Template" (ghost/outline, Download icon)
+```
+
+**Have Questions (white):**
+```
+Email: info@tbi.nie.ac.in
+Phone: +91-9730020838
+```
+
+**→ CONVEX INTEGRATION:** Replace Google Form link with embedded form submitting to Convex `applications` table
+
+---
+
+### PAGE 7: Contact (/contact)
+**H1:** "Contact Us"  **Breadcrumb:** "Home > Contact"
+**Hero bg:** linear-gradient(135deg, #0D2B6E 0%, #1A3F9F 60%, #2E5FD9 100%) — with dot grid overlay
+
+**Contact Info (left column, AOS fade-right):**
+```
+MapPin  → Address  → "The National Institute of Engineering, Mysuru — 570 008, Karnataka, India"
+Phone   → Phone    → "+91-9730020838"
+Mail    → Email    → "info@tbi.nie.ac.in" + "ceo@tbi.nie.ac.in (CEO)"
+Clock   → Hours    → "Monday – Friday, 9:00 AM – 5:00 PM"
+```
+Each row: 44px orange icon box + label (bold 14px blue-dark) + value (gray-text)
+
+**Contact Form (right column, AOS fade-left):**
+```
+Card: gray-light bg, border-radius 24px, padding 40px 36px
+H3: "Send a Message"
+Fields: Full Name* | Email* | Phone (optional) | Message* (textarea 4 rows)
+Button: "Send Message" — orange bg, hover scale 1.03, disabled during submitting
+Success: green panel with CheckCircle2 icon, "Thank you! We'll get back within 2 working days."
+Error: red panel with AlertCircle icon, email fallback link
+```
+Input style: white bg, 1px solid #E0E4F0, padding 14px 16px, border-radius 10px, focus: blue border + shadow
+**→ CONVEX INTEGRATION:** Replace Formspree fetch with Convex useMutation → `messages` table
+
+**Google Maps (full width, 420px tall):**
+```
+Embed: National Institute of Engineering, Mysuru
+URL: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3897.4835!2d76.6120!3d12.3242..."
+```
+
+---
+
+### PAGE 8: Leadership (/leadership)
+**H1:** "Our Leadership"  **Subtitle:** "The people driving innovation at NIETBI"
+
+**Director Card (dark navy 2-col card):**
+```
+Photo: /assets/director.jpg (260×280px, border-radius 16, top-center crop)
+Badge: "Chief Innovation Officer" (orange gradient pill)
+Name: Mir Amjad Husain (white, clamp 24-36px, weight 800)
+Title: Director, NIEISC — NIE Innovation, Incubation & Startup Center
+Orange divider line: 60px × 3px
+Bio: "3 decades of experience in product development, engineering, regulatory compliance,
+     automation, and technology. Leading NIE's innovation ecosystem and bridging the gap
+     between academic research and real-world entrepreneurship."
+Email button: amjadhusain@nie.ac.in (glassmorphism pill, Mail icon orange)
+```
+Slide animation: photo x:-60→0, content x:60→0 (both delay 0.7s)
+
+**Faculty Members (8 cards, 4-col grid, gray-light):**
+```
+Dr. Gurumurthy S R   → Professor                  → PhD IIT Bombay
+Dr. H Pradeepa       → Associate Professor & HOD  → M.Tech, PhD
+Dr. R Chidanandappa  → Associate Professor         → M.Tech, PhD
+Dr. Likith Kumar M V → Associate Professor         → M.Tech, PhD
+Dr. Jayasankar V N   → Associate Professor         → PhD NITK
+Dr. Rohit K Mathew   → Associate Professor         → PhD NIT Calicut
+Ms. Sonaxi B Raikar  → Assistant Professor         → M.Tech
+Mr. Neeli Mallikarjuna → Assistant Professor       → M.Tech
+```
+Card: white, 64px navy circle with initials (first 2 letters of 3+ char words), name, role, orange qual badge
+
+**Advisors (4 cards, 2-col grid, white):**
+```
+Achutha Bachalli K.  → Chairman, Infopine                        → IT | Software Solutions | Business Growth
+Srikanth Nadhamuni   → Managing Trustee, eGovernments Foundation → Aadhaar Architect | CPU Design | Banking Tech
+Madan Padaki         → President, TiE Bangalore                  → 23+ Yrs Ecosystem Building | Entrepreneurship
+Kiran Bettadapur     → Managing Partner, Prudentia Law Chambers  → Patent Law | Company Secretary | Innovation
+```
+Card: white, orange left-border 4px, 52px orange-gradient avatar with initials, name, title, tag pills (blue tint)
+
+---
+
+### PAGE 9: Not Found (*)
+Standard 404 page with "Go Back Home" button and NIETBI branding
+
+---
+
+## PART 6 — MOBILE RESPONSIVENESS RULES
+
+### Breakpoints
+```
+Mobile:  < 640px   (primary mobile breakpoint)
+Tablet:  640-900px
+Desktop: > 900px
+Nav hamburger: < 768px
+```
+
+### Key Mobile Rules (from index.css)
+```css
+/* iOS auto-zoom fix — CRITICAL */
+input, textarea, select { font-size: 16px !important; }
+
+/* Touch targets */
+button, a, [role="button"] { min-height: 44px; min-width: 44px; }
+
+/* No horizontal scroll */
+body { overflow-x: hidden; }
+
+/* Word wrap */
+* { word-break: break-word; overflow-wrap: break-word; }
+
+/* Fluid grid classes */
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+/* Split layout */
+.split { display: flex; flex-wrap: wrap; gap: var(--gap); align-items: center; }
+.split > * { flex: 1 1 300px; }
+```
+
+### Per-Page Mobile Overrides
+```
+Home hero:        ≤900px → single column, hide right stat grid
+Home stats:       ≤900px → 2×2 grid
+Home steps:       ≤900px → vertical column
+About two-col:    ≤768px → single column
+Leadership:       ≤900px → director stacks; ≤768px → faculty 2-col, advisors 1-col
+Apply timeline:   ≤768px → 2-col, hide horizontal line; ≤639px → vertical with left line
+Footer:           ≤640px → accordion quick links + focus areas; center brand
+```
+
+---
+
+## PART 7 — CONVEX BACKEND SCHEMA
+
+### convex/schema.ts
+```typescript
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
+
+export default defineSchema({
+  applications: defineTable({
+    founderName:    v.string(),
+    email:          v.string(),
+    phone:          v.string(),
+    startupName:    v.string(),
+    sector:         v.string(),   // "AgriTech" | "Clean Energy & EV" | "AI & ML" | ...
+    stage:          v.string(),   // "Idea" | "Prototype" | "Early Revenue" | "Scaling"
+    description:    v.string(),
+    pitchDeckUrl:   v.optional(v.string()),
+    status:         v.string(),   // "pending" | "shortlisted" | "rejected" | "onboarded"
+    submittedAt:    v.number(),
+  }),
+
+  messages: defineTable({
+    name:           v.string(),
+    email:          v.string(),
+    phone:          v.optional(v.string()),
+    message:        v.string(),
+    isRead:         v.boolean(),
+    submittedAt:    v.number(),
+  }),
+
+  startups: defineTable({
+    name:           v.string(),
+    sector:         v.string(),
+    stage:          v.string(),   // "incubated" | "graduated"
+    description:    v.string(),
+    logoUrl:        v.optional(v.string()),
+    website:        v.optional(v.string()),
+    foundedYear:    v.optional(v.number()),
+    isPublished:    v.boolean(),
+  }),
+
+  news: defineTable({
+    title:          v.string(),
+    slug:           v.string(),
+    body:           v.string(),
+    imageUrl:       v.optional(v.string()),
+    tags:           v.array(v.string()),
+    publishedAt:    v.number(),
+    isPublished:    v.boolean(),
+  }),
+
+  events: defineTable({
+    title:          v.string(),
+    description:    v.string(),
+    date:           v.number(),
+    venue:          v.optional(v.string()),
+    imageUrl:       v.optional(v.string()),
+    isPublished:    v.boolean(),
+  }),
+
+  posts: defineTable({
+    title:          v.string(),
+    slug:           v.string(),
+    body:           v.string(),
+    tags:           v.array(v.string()),
+    author:         v.string(),
+    publishedAt:    v.number(),
+    isPublished:    v.boolean(),
+  }),
+
+  donations: defineTable({
+    donorName:      v.string(),
+    email:          v.string(),
+    phone:          v.optional(v.string()),
+    amount:         v.number(),
+    reference:      v.optional(v.string()),
+    donatedAt:      v.number(),
+    isVerified:     v.boolean(),
+  }),
+});
+```
+
+### convex/mutations.ts (Key patterns)
+```typescript
+// Submit application
+export const submitApplication = mutation({
+  args: {
+    founderName: v.string(), email: v.string(), phone: v.string(),
+    startupName: v.string(), sector: v.string(), stage: v.string(),
+    description: v.string(),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert("applications", {
+      ...args, status: "pending", submittedAt: Date.now(),
+    });
+  },
+});
+
+// Send contact message
+export const sendMessage = mutation({
+  args: { name: v.string(), email: v.string(), phone: v.optional(v.string()), message: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert("messages", {
+      ...args, isRead: false, submittedAt: Date.now(),
+    });
+  },
+});
+```
+
+### React Usage (replacing Formspree)
+```tsx
+import { useMutation } from "convex/react";
+import { api } from "../convex/_generated/api";
+
+const sendMessage = useMutation(api.mutations.sendMessage);
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setStatus("submitting");
+  try {
+    await sendMessage({ name: form.name, email: form.email, phone: form.phone, message: form.message });
+    setStatus("success");
+    setForm({ name: "", email: "", phone: "", message: "" });
+    setTimeout(() => setStatus("idle"), 5000);
+  } catch {
+    setStatus("error");
+  }
+};
+```
+
+---
+
+## PART 8 — PHASE-WISE PLAN
+
+### Phase 1 — Foundation (Week 1) ✅ PRIORITY
+**Goal:** Get all 9 existing pages running in Antigravity IDE, pixel-perfect with animations
+
+**Step 1.1 — Project Setup**
+```bash
+npm create vite@latest nietbi-website -- --template react-ts
+cd nietbi-website
+npm install framer-motion @studio-freight/lenis aos react-countup react-helmet-async react-router-dom
+npm install convex
+npm install lucide-react
+npm install -D tailwindcss @tailwindcss/vite @types/aos
+```
+
+**Step 1.2 — Clean vite.config.ts**
+```typescript
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import path from "path";
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: { alias: { "@": path.resolve(__dirname, "src") } },
+});
+```
+
+**Step 1.3 — Copy from ZIP (exact files)**
+```
+src/index.css                    ← complete CSS (all variables, fluid grid, mobile rules)
+src/App.tsx                      ← routing, AOS, Lenis, page transitions
+src/hooks/useMobile.ts           ← viewport hook
+src/lib/smoothScroll.ts          ← scrollToTop helper
+src/components/Navbar.tsx
+src/components/Footer.tsx
+src/components/LoadingScreen.tsx
+src/components/AnnouncementBanner.tsx
+src/components/ScrollToTop.tsx
+src/components/StepCard.tsx
+src/pages/Home.tsx
+src/pages/About.tsx
+src/pages/FocusAreas.tsx
+src/pages/WhatWeOffer.tsx
+src/pages/WhoCanApply.tsx
+src/pages/Apply.tsx
+src/pages/Contact.tsx
+src/pages/Leadership.tsx
+src/pages/NotFound.tsx
+public/assets/nie-logo.png       ← NIE university logo
+public/assets/director.jpg       ← Director photo
+public/favicon.svg
+```
+
+**Step 1.4 — Convex Setup**
+```bash
+npx convex dev
+# Follow prompts → creates convex/ folder + VITE_CONVEX_URL in .env.local
+```
+
+**Step 1.5 — main.tsx with Convex**
+```tsx
+import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { HelmetProvider } from "react-helmet-async";
+
+const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <ConvexProvider client={convex}>
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
+    </ConvexProvider>
+  </React.StrictMode>
+);
+```
+
+**Step 1.6 — Wire Convex into forms**
+- `Contact.tsx`: replace Formspree fetch → Convex `sendMessage` mutation
+- `Apply.tsx`: replace Google Form link → Convex `submitApplication` mutation (with inline form)
+
+**Deliverable:** All 9 pages live, fully animated, mobile-responsive ✓
+
+---
+
+### Phase 2 — Remaining Static Pages (Week 2)
+**Goal:** Build all static pages — no dynamic data needed
+
+Build these pages one by one (same pattern: dark hero + alternating sections):
+
+1. `/programs` — Programs & Cohorts page
+2. `/infrastructure` — Facilities & Infrastructure
+3. `/social-cause` — Social Impact / CSR
+4. `/achievements` — Full achievements list (expanded from home preview)
+5. `/gallery` — Photo gallery (static images, grid layout)
+6. `/partners` — Partners & Sponsors logos
+7. `/mentors` — Mentor profiles (same pattern as leadership advisors)
+8. `/faq` — Accordion FAQ
+9. `/alumni` — Alumni Network
+10. `/media` — Media Coverage / Press
+11. `/investors` — Investor Relations
+12. `/policy` — Policy Documents / Brochure (PDF links)
+13. `/thank-you` — Thank You / Confirmation page
+
+**Pattern for each page:**
+```tsx
+// Dark hero (same pattern as About, Leadership pages)
+// Alternating white/#F4F6FB sections
+// All headings: blue gradient text
+// All cards: white bg, hover y-4 shadow
+// All grids: auto-fit or explicit column count
+```
+
+**Deliverable:** 22+ pages total, full site navigation works ✓
+
+---
+
+### Phase 3 — Dynamic Features with Convex (Week 3)
+**Goal:** Pages that need live data from Convex
+
+**3.1 Startups Pages**
+```
+/startups         → Convex useQuery(api.startups.list, { stage: "incubated" })
+/startups/graduated → Convex useQuery(api.startups.list, { stage: "graduated" })
+```
+Cards: logo, name, sector badge, description, website link
+Filter: by sector (AgriTech, AI, etc.)
+
+**3.2 News & Events**
+```
+/news             → Convex useQuery(api.news.list, { isPublished: true })
+/news/:id         → Convex useQuery(api.news.getBySlug, { slug })
+```
+Card: image, date, title, tags, read more link
+
+**3.3 Blog**
+```
+/blog             → Convex useQuery(api.posts.list)
+/blog/:id         → Convex useQuery(api.posts.getBySlug)
+```
+
+**3.4 Donate Us**
+```
+/donate           → Donation form → Convex submitDonation mutation
+                  → Display donation amounts, UPI QR code
+                  → Show donor count from Convex
+```
+
+**3.5 Admin Dashboard (/admin)**
+```
+View all applications (table)
+Change status: pending → shortlisted → rejected
+View contact messages (mark as read)
+View donations
+Manage startups / news / posts (CRUD)
+```
+Protected: simple password or Convex auth
+
+**Deliverable:** Full dynamic backend operational ✓
+
+---
+
+### Phase 4 — Polish & Optimization (Week 4)
+- Image optimization (WebP, lazy loading)
+- SEO: verify all Helmet title + meta on every page
+- Mobile QA pass: test every page at 390px width
+- Performance: code-split lazy-import all pages
+- Convex queries: add pagination for news/startups lists
+- Deploy: Vercel or Netlify (static frontend) + Convex handles backend
+
+---
+
+## PART 9 — MASTER CONTEXT PROMPT (paste into Antigravity IDE per session)
+
+```
+You are building the NIETBI (NIE Technology Business Incubator) institutional website.
+Client: National Institute of Engineering, Mysuru — a Govt. of Karnataka TBI 2.0 supported incubator.
+
+TECH STACK:
+- React 19 + Vite + TypeScript
+- Tailwind CSS v4 (@import "tailwindcss" in CSS — NO tailwind.config.js)
+- Framer Motion (animations)
+- Lenis smooth scroll — desktop only (disabled at window.innerWidth < 640)
+- AOS (re-initialized on every route change via useEffect in AOSHandler)
+- React Router DOM v7 (BrowserRouter)
+- react-helmet-async (SEO)
+- react-countup (animated numbers)
+- Convex (FULL backend + storage — all forms, all dynamic data)
+- lucide-react (all icons)
+
+BRAND COLORS (CSS variables defined in index.css):
+--blue-dark: #0D2B6E  --blue-mid: #1A3F9F  --blue-light: #2E5FD9
+--orange: #F5821F  --orange-light: #FF9A3C
+--gray-light: #F4F6FB  --gray-text: #555E7B
+
+FONTS: Heading = "Plus Jakarta Sans"/"Poppins" | Body = "Inter"
+
+DESIGN RULES:
+1. All section headings: blue gradient text on white bg, white gradient on dark bg
+2. Hero sections: background #060E24 (near-black navy) with floating animated orbs
+3. Sections alternate: white ↔ #F4F6FB (gray-light), dark sections use #0D2B6E or #060E24
+4. All cards: border-radius 16-18px, border 1px solid #E8ECF8, hover: y-4 translateY + shadow
+5. Orange CTA buttons: linear-gradient(135deg, #F5821F, #FF9A3C), border-radius 8px
+6. All scroll animations: whileInView + viewport={{ once: true, margin: "-100px" }}
+7. Stagger grids: staggerChildren 0.09-0.13s
+8. Mobile breakpoint: 640px (useMobile hook), nav hamburger: 768px
+9. iOS fix: all inputs font-size 16px !important (prevents auto-zoom)
+10. All forms submit to Convex mutations (NOT Formspree, NOT Google Forms)
+
+PAGES ALREADY BUILT:
+/ Home | /about | /focus-areas | /what-we-offer | /who-can-apply | /apply | /contact | /leadership
+
+CONVEX TABLES:
+applications | messages | startups | news | events | posts | donations
+
+ALWAYS READ EXISTING FILES BEFORE EDITING. Never assume file state.
+```
+
+---
+
+## PART 10 — SHARED COMPONENTS QUICK REFERENCE
+
+### useMobile hook
+```typescript
+export function useMobile(breakpoint = 640): boolean {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < breakpoint : false
+  );
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < breakpoint);
+    window.addEventListener("resize", handler, { passive: true });
+    return () => window.removeEventListener("resize", handler);
+  }, [breakpoint]);
+  return isMobile;
+}
+```
+
+### StepCard
+```tsx
+// 56px orange circle (number) + title + description, centered column layout
+// Orange circle: background: "var(--orange)", boxShadow: "0 4px 16px rgba(245,130,31,0.35)"
+// Font: Poppins 800, 22px, white
+```
+
+### ScrollToTop
+```tsx
+// Appears at scrollY > 400px, bottom-right 32px, 56px orange circle
+// ArrowUp icon (22px, strokeWidth 2.5)
+// whileHover: scale 1.12 + "0 8px 36px rgba(245,130,31,0.55)"
+// Smooth scroll: document.documentElement.scrollTop = 0
+```
+
+### LoadingScreen
+```tsx
+// Shows for 1.2s on first app load
+// Full-screen #0D2B6E overlay
+// "NIE" white + "TBI" orange, Poppins 800 40px, letter-spacing 0.08em
+// Gradient underline (3px, blue-light → orange)
+// Subtitle: "NIE Technology Business Incubator", Inter 13px, rgba(255,255,255,0.5)
+// Exit: opacity → 0, duration 0.4s easeInOut
+```
+
+### Navbar Active Link
+```tsx
+// Active: color var(--orange) + 2px orange bottom border (width 100%)
+// Inactive: white (on transparent nav) or blue-dark (on scrolled nav)
+// Hover: underline width 0→100% via CSS transition
+// Scrolled threshold: window.scrollY > 40
+```
