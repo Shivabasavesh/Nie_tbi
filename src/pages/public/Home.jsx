@@ -1,8 +1,9 @@
 import SEOHead from '../../components/system/SEOHead';
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Leaf, Zap, Cpu, Recycle, Globe, Wrench, ChevronDown } from 'lucide-react';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Leaf, Zap, Cpu, Recycle, Globe, Wrench, ChevronDown, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import StepCard from '../../components/StepCard';
 
 
 const fadeUp = {
@@ -16,6 +17,9 @@ const cardItem = {
 };
 
 export default function Home() {
+  const stepsRef = useRef(null);
+  const stepsInView = useInView(stepsRef, { once: true, amount: 0.2 });
+
   return (
     <div>
       <SEOHead title="Home | NIETBI" description="Explore Home at NIE TBI. Learn more about our deep-tech incubation ecosystem." />
@@ -125,6 +129,128 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── WHAT WE OFFER PREVIEW ── */}
+      <section style={{ background: "var(--blue-dark)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            style={{ textAlign: "center", marginBottom: 48 }}
+          >
+            <h2 style={{
+              fontFamily: "var(--font-heading)", fontWeight: 700,
+              fontSize: "clamp(26px, 3vw, 42px)", margin: "0 0 12px",
+              background: "linear-gradient(135deg, #FFFFFF 0%, #A8C4FF 100%)",
+              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            }}>
+              What NIETBI Offers
+            </h2>
+            <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 16, fontFamily: "var(--font-body)" }}>
+              World-class resources to take your startup from idea to market
+            </p>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
+            style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24, marginBottom: 48 }}
+          >
+            {[
+              { icon: <Wrench size={26} />, title: "Co-Working Space", desc: "Collaborative, fully equipped workspace for your team" },
+              { icon: <Cpu size={26} />, title: "Expert Mentorship", desc: "Industry & academic mentor network for strategic guidance" },
+              { icon: <Globe size={26} />, title: "Market Connect", desc: "Connections to customers, partners, and investor networks" },
+            ].map((offer) => (
+              <motion.div
+                key={offer.title}
+                variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } }}
+                style={{
+                  background: "rgba(255,255,255,0.06)",
+                  borderRadius: 18, padding: 28,
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  color: "#fff",
+                }}
+              >
+                <div style={{
+                  width: 52, height: 52, borderRadius: 14,
+                  background: "rgba(245,130,31,0.18)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  color: "var(--orange)", marginBottom: 16,
+                }}>
+                  {offer.icon}
+                </div>
+                <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 17, margin: "0 0 8px" }}>{offer.title}</h3>
+                <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, lineHeight: 1.65, margin: 0, fontFamily: "var(--font-body)" }}>{offer.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+          <div style={{ textAlign: "center" }}>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} style={{ display: "inline-block" }}>
+              <Link to="/what-we-offer" style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                background: "linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)",
+                color: "#fff", padding: "14px 32px", borderRadius: 8,
+                textDecoration: "none", fontWeight: 700, fontSize: 15,
+                fontFamily: "var(--font-body)",
+                boxShadow: "0 4px 20px rgba(245,130,31,0.4)",
+              }}>
+                View All Offerings <ChevronRight size={18} />
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── HOW TO APPLY ── */}
+      <section style={{ background: "#ffffff", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            style={{ textAlign: "center", marginBottom: 56 }}
+          >
+            <h2 style={{
+              fontFamily: "var(--font-heading)", fontWeight: 700,
+              fontSize: "clamp(26px, 3vw, 42px)", margin: "0 0 12px",
+              background: "linear-gradient(135deg, #0D2B6E 0%, #2E5FD9 100%)",
+              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            }}>
+              How to Apply
+            </h2>
+            <p style={{ color: "var(--gray-text)", fontSize: 16, fontFamily: "var(--font-body)" }}>
+              A simple four-step journey to join our incubator
+            </p>
+          </motion.div>
+          <motion.div
+            ref={stepsRef}
+            initial="hidden"
+            animate={stepsInView ? "show" : "hidden"}
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.14 } } }}
+            style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}
+            className="steps-row"
+          >
+            {[
+              { step: 1, title: "Scan & Apply", desc: "Fill online application form" },
+              { step: 2, title: "Screening", desc: "Expert panel reviews your application" },
+              { step: 3, title: "Pitch & Interview", desc: "Present your idea to the selection committee" },
+              { step: 4, title: "Onboarding", desc: "Join NIETBI & start your journey" },
+            ].map((s) => (
+              <motion.div
+                key={s.step}
+                variants={{ hidden: { opacity: 0, x: -30 }, show: { opacity: 1, x: 0, transition: { duration: 0.55, ease: "easeOut" } } }}
+                style={{ flex: "1 1 180px" }}
+              >
+                <StepCard step={s.step} title={s.title} description={s.desc} />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA Banner */}
       <section style={{ background: 'linear-gradient(135deg, #0D2B6E 0%, #1A3F9F 100%)', padding: '80px 24px', textAlign: 'center', color: 'white' }}>
         <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}>
@@ -135,6 +261,11 @@ export default function Home() {
           </Link>
         </motion.div>
       </section>
+      <style>{`
+        @media (max-width: 640px) {
+          .steps-row { flex-direction: column !important; align-items: center !important; }
+        }
+      `}</style>
     </div>
   );
 }
