@@ -31,6 +31,13 @@ const fadeUp = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
+const director = {
+  name: "Amjad Hussain",
+  role: "Director, NIE EIC - NIE Innovation, Incubation & Startup Center",
+  photo: "/assets/ceo%20image.jpeg",
+  email: "amjadhusain@nie.ac.in",
+};
+
 export default function Leadership() {
   return (
     <div>
@@ -77,10 +84,13 @@ export default function Leadership() {
               style={{ display: "flex", justifyContent: "center" }}
             >
               <img
-                src="/assets/documents/ceo%20image.jpeg"
-                alt="Amjad Husain — CEO & Director, NIEISC"
+                src={director.photo}
+                alt={`${director.name} - Director, NIE EIC`}
                 loading="eager"
-                style={{ width: 280, height: 280, borderRadius: "50%", objectFit: "cover", objectPosition: "top center", border: "4px solid rgba(255,255,255,0.18)", boxShadow: "0 12px 48px rgba(0,0,0,0.4)" }}
+                decoding="async"
+                width="280"
+                height="280"
+                style={{ width: 280, height: 280, borderRadius: "50%", objectFit: "cover", objectPosition: "center", border: "4px solid rgba(255,255,255,0.18)", boxShadow: "0 12px 48px rgba(0,0,0,0.4)", background: "#020617" }}
               />
             </motion.div>
             <motion.div
@@ -91,23 +101,23 @@ export default function Leadership() {
                 Chief Executive Officer
               </span>
               <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: "clamp(24px, 3vw, 36px)", color: "#fff", margin: "0 0 8px" }}>
-                Amjad Husain
+                {director.name}
               </h2>
               <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 14, fontFamily: "var(--font-body)", margin: "0 0 22px", lineHeight: 1.6 }}>
-                Director, NIEISC — NIE Innovation, Incubation &amp; Startup Center
+                {director.role}
               </p>
               <div style={{ width: 60, height: 3, background: "linear-gradient(90deg, #F5821F, #FF9A3C)", borderRadius: 2, marginBottom: 22 }} />
               <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 15, lineHeight: 1.85, fontFamily: "var(--font-body)", margin: "0 0 28px" }}>
                 3 decades of experience in product development, engineering, regulatory compliance, automation, and technology. Leading NIE's innovation ecosystem and bridging the gap between academic research and real-world entrepreneurship.
               </p>
               <a
-                href="mailto:amjadhusain@nie.ac.in"
+                href={`mailto:${director.email}`}
                 style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.08)", backdropFilter: "blur(8px)", color: "#fff", fontSize: 14, fontFamily: "var(--font-body)", padding: "10px 20px", borderRadius: 100, textDecoration: "none", border: "1px solid rgba(255,255,255,0.15)" }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.16)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
               >
                 <Mail size={15} style={{ color: "var(--orange)" }} />
-                amjadhusain@nie.ac.in
+                {director.email}
               </a>
             </motion.div>
           </div>
