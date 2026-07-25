@@ -1,0 +1,9 @@
+﻿Backup created: 20260725-111556
+Repository: C:\Users\shiva basavesh a s\Downloads\GitHub\nie_tbi\Nie_tbi
+Branch: main
+HEAD: 6420849c9916ae1d75702f09a600130ad245561b
+origin/main: 8a8f1310c15767dd0ce60810e16d30c5ce66523f
+Archive: nie_tbi-worktree-snapshot-20260725-111556.zip
+Excluded directories: .git, node_modules, dist, .vercel, backups
+Excluded env files: .env, .env.local, .env.development.local, .env.test.local, .env.production.local and .env.*.local
+Validation before backup: npm run build passed
