@@ -45,8 +45,8 @@ export default function Contact() {
         padding: 'calc(120px + var(--banner-h, 0px)) 24px 60px',
         textAlign: 'center', color: 'white'
       }}>
-        <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: 13, marginBottom: 16 }}>Home &gt; Contact</div>
-        <h1 style={{ fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 800 }}>Contact Us</h1>
+        <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: 13, marginBottom: 16 }}>Home &gt; Contact</div>
+        <h1 style={{ fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 800, color: 'white' }}>Contact Us</h1>
       </section>
 
       <section style={{ background: 'white', padding: '80px 24px' }}>

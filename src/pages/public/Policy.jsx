@@ -10,11 +10,10 @@ const fadeUp = {
 
 export default function Policy() {
   const documents = [
-    { name: 'Incubation Policy & Guidelines', date: 'Updated Jan 2024' },
-    { name: 'Intellectual Property (IP) Policy', date: 'Updated Feb 2024' },
-    { name: 'Code of Conduct for Startups', date: 'Updated Mar 2024' },
-    { name: 'Standard Application Form (Offline)', date: 'Updated Apr 2024' },
-    { name: 'NIETBI Official Brochure', date: 'Updated May 2024' }
+    { name: 'Intellectual Property Policy', file: '/assets/documents/intellectial property policy.pdf' },
+    { name: 'National Innovation and Startup Policy', file: '/assets/documents/NATIONAL INNOVATION AND STARTUP POLICY.pdf' },
+    { name: 'NIE Incubation Policy', file: '/assets/documents/nie-incubation-policy.pdf' },
+    { name: 'NIE Innovation and Startup Policy', file: '/assets/documents/NIE-Innovation and Startup Policy.pdf' }
   ];
 
   return (
@@ -45,13 +44,12 @@ export default function Policy() {
                     <FileText size={24} />
                   </div>
                   <div>
-                    <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--blue-dark)', marginBottom: 4 }}>{doc.name}</h3>
-                    <div style={{ color: 'var(--gray-text)', fontSize: 13 }}>{doc.date}</div>
+                    <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--blue-dark)', margin: 0 }}>{doc.name}</h3>
                   </div>
                 </div>
-                <button style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--blue-dark)', border: '2px solid var(--blue-mid)', padding: '10px 20px', borderRadius: 8, fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>
+                <a href={doc.file} download target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: 'var(--blue-dark)', border: '2px solid var(--blue-mid)', padding: '10px 20px', borderRadius: 8, fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' }}>
                   <Download size={16} /> Download PDF
-                </button>
+                </a>
               </motion.div>
             ))}
           </motion.div>

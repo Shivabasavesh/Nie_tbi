@@ -1,7 +1,7 @@
 import SEOHead from '../../components/system/SEOHead';
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Leaf, Zap, Cpu, Recycle, Globe, Wrench, ChevronDown, ChevronRight } from 'lucide-react';
+import { Leaf, Zap, Cpu, Recycle, Globe, Wrench, ChevronDown, ChevronRight, Award, Star, TrendingUp, Users, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import StepCard from '../../components/StepCard';
 
@@ -61,18 +61,34 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-          <motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, maxWidth: 380, margin: '0 auto' }}>
-            {[
-              { value: 'Est. 1946', label: 'NIE Mysuru' },
-              { value: '6+', label: 'Focus Sectors' },
-              { value: 'TBI 2.0', label: 'Govt. Karnataka' },
-              { value: '₹ Funded', label: 'Startup Support' }
-            ].map((stat, i) => (
-              <motion.div key={i} variants={{ hidden: { opacity: 0, x: 40 }, show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } } }} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 16, padding: '24px 20px', textAlign: 'center', backdropFilter: 'blur(12px)' }}>
-                <div style={{ color: 'white', fontWeight: 800, fontSize: 24, marginBottom: 8 }}>{stat.value}</div>
-                <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13, fontWeight: 500 }}>{stat.label}</div>
-              </motion.div>
-            ))}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }} 
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }} 
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }} 
+            style={{ 
+              position: 'relative', 
+              maxWidth: 700, 
+              margin: '0 auto', 
+              width: '100%', 
+              borderRadius: 24, 
+              padding: 8, 
+              background: 'rgba(255, 255, 255, 0.03)', 
+              border: '1px solid rgba(255, 255, 255, 0.1)', 
+              backdropFilter: 'blur(20px)',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 40px rgba(46, 95, 217, 0.2)'
+            }}
+          >
+            <div style={{ borderRadius: 16, overflow: 'hidden', position: 'relative', aspectRatio: '16/9', background: '#000' }}>
+              <video 
+                src="/assets/hero-video.mp4" 
+                autoPlay 
+                muted 
+                loop 
+                playsInline 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top right, rgba(6, 14, 36, 0.2), transparent)' }} />
+            </div>
           </motion.div>
         </div>
 
@@ -107,9 +123,9 @@ export default function Home() {
               Supported & Recognised by
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 40, flexWrap: 'wrap' }}>
-              <img src="/assets/gok-logo.png" alt="Govt. of Karnataka" style={{ height: 48, filter: 'grayscale(1) opacity(0.6)', transition: 'all 0.3s ease' }} onMouseOver={e => e.currentTarget.style.filter='grayscale(0) opacity(1)'} onMouseOut={e => e.currentTarget.style.filter='grayscale(1) opacity(0.6)'} />
-              <img src="/assets/startup-karnataka.png" alt="Startup Karnataka" style={{ width: 80, filter: 'grayscale(1) opacity(0.6)', transition: 'all 0.3s ease' }} onMouseOver={e => e.currentTarget.style.filter='grayscale(0) opacity(1)'} onMouseOut={e => e.currentTarget.style.filter='grayscale(1) opacity(0.6)'} />
-              <img src="/assets/ktech-logo.jpeg" alt="K-Tech" style={{ width: 72, filter: 'grayscale(1) opacity(0.6)', transition: 'all 0.3s ease', mixBlendMode: 'multiply' }} onMouseOver={e => e.currentTarget.style.filter='grayscale(0) opacity(1)'} onMouseOut={e => e.currentTarget.style.filter='grayscale(1) opacity(0.6)'} />
+              <img src="/assets/gok-logo.png" alt="Govt. of Karnataka" style={{ height: 48 }} />
+              <img src="/assets/startup-karnataka.png" alt="Startup Karnataka" style={{ width: 80 }} />
+              <img src="/assets/ktech-logo.jpeg" alt="K-Tech" style={{ width: 72, mixBlendMode: 'multiply' }} />
             </div>
           </motion.div>
         </div>
@@ -210,6 +226,82 @@ export default function Home() {
                 boxShadow: "0 4px 20px rgba(245,130,31,0.4)",
               }}>
                 View All Offerings <ChevronRight size={18} />
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── ACHIEVEMENTS & HIGHLIGHTS ── */}
+      <section style={{ background: '#F4F6FB', padding: '80px 24px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            style={{ textAlign: "center", marginBottom: 48 }}
+          >
+            <h2 style={{
+              fontFamily: "var(--font-heading)", fontWeight: 700,
+              fontSize: "clamp(26px, 3vw, 42px)", margin: "0 0 12px",
+              background: "linear-gradient(135deg, #0D2B6E 0%, #2E5FD9 100%)",
+              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            }}>
+              Our Achievements
+            </h2>
+            <p style={{ color: "var(--gray-text)", fontSize: 16, fontFamily: "var(--font-body)", maxWidth: 600, margin: '0 auto' }}>
+              Celebrating the milestones that define our journey and the successes of our startups.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
+            style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 32, marginBottom: 40 }}
+          >
+            {[
+              { category: 'STARTUP', title: 'SportsKPI', desc: 'Leading analytics and live broadcasting platform for Indian sports — streaming and production services.', icon: <TrendingUp size={24} color="#3B82F6" /> },
+              { category: 'AWARD', title: 'VS PRO TRADING', desc: 'Received "Innovative Startup of the Year 2024-25" from Karnataka Governor at Global India Business Forum.', icon: <Award size={24} color="#EAB308" /> },
+              { category: 'HACKATHON', title: 'Smart India Hackathon', desc: 'Served as nodal center (2023-24) with direct interaction from PM Narendra Modi.', icon: <Cpu size={24} color="#10B981" /> }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } }}
+                whileHover={{ y: -8, boxShadow: '0 24px 48px rgba(13,43,110,0.12)' }}
+                style={{
+                  background: 'white',
+                  borderRadius: 20,
+                  border: '1px solid #E8ECF8',
+                  padding: 32,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
+                  <div style={{ padding: 10, background: '#F4F6FB', borderRadius: 12 }}>
+                    {item.icon}
+                  </div>
+                  <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', color: '#64748B' }}>{item.category}</span>
+                </div>
+                <h3 style={{ fontFamily: "var(--font-heading)", fontSize: 22, fontWeight: 800, color: '#0F172A', marginBottom: 16, lineHeight: 1.3, margin: 0 }}>{item.title}</h3>
+                <p style={{ fontFamily: "var(--font-body)", color: '#475569', fontSize: 15, lineHeight: 1.6, flexGrow: 1, margin: 0, marginTop: 16 }}>{item.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <div style={{ textAlign: "center" }}>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} style={{ display: "inline-block" }}>
+              <Link to="/achievements" style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                background: "transparent", color: "var(--blue-dark)", padding: "14px 32px", borderRadius: 8,
+                textDecoration: "none", fontWeight: 700, fontSize: 15, fontFamily: "var(--font-body)",
+                border: "2px solid rgba(13,43,110,0.2)", transition: "border 0.3s"
+              }}>
+                View All Achievements <ChevronRight size={18} />
               </Link>
             </motion.div>
           </div>

@@ -50,15 +50,8 @@ export default function Navbar() {
     )}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
-          <Link to="/" className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-full bg-white border-2 border-white/20 flex items-center justify-center shrink-0 shadow-sm overflow-hidden">
-              <img src="/assets/nie-shield.png" alt="NIE Shield" className="h-[28px] w-auto object-contain" />
-            </div>
-            <div className="flex flex-col justify-center">
-              <span className="font-heading font-extrabold text-2xl text-nie-navy leading-none tracking-tight">
-                NIETBI
-              </span>
-            </div>
+          <Link to="/" className="flex items-center">
+            <img src="/assets/nietbi-logo.png" alt="NIETBI Logo" className="h-10 sm:h-12 w-auto object-contain" />
           </Link>
 
           {/* Desktop Nav */}

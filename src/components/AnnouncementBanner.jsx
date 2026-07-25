@@ -55,7 +55,7 @@ export default function AnnouncementBanner() {
             maxWidth: 1200, width: '100%', padding: '0 40px 0 24px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px'
           }}>
             <p style={{ margin: 0, fontSize: '14px', fontWeight: 500 }}>
-              {isMobile ? "Applications Now Open — NIETBI 2025" : "🎉 Applications are now open for NIETBI Incubation Program 2025"}
+              {isMobile ? "Applications Now Open — NIETBI 2026" : "🎉 Applications are now open for NIETBI Incubation Program 2026"}
             </p>
             <Link to="/apply" style={{
               color: 'white', textDecoration: 'underline', fontSize: '14px', fontWeight: 700, whiteSpace: 'nowrap'

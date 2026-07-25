@@ -12,11 +12,27 @@ const Downloads = () => {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
 
-  const { data: documents, isLoading, isError, refetch } = useSupabaseTable('documents', {
+  const { data: dbDocuments, isLoading, isError, refetch } = useSupabaseTable('documents', {
     filter: { category: category === 'All' ? '' : category },
     search: search,
     searchColumn: 'title',
     order: { column: 'created_at', ascending: false }
+  });
+
+  const staticPolicies = [
+    { id: 'static-1', title: 'National Innovation and Startup Policy', description: 'Policy guidelines for innovation and startups.', category: 'Policies', file_url: '/assets/documents/NATIONAL INNOVATION AND STARTUP POLICY.pdf' },
+    { id: 'static-2', title: 'NIE Innovation and Startup Policy', description: 'Institutional innovation and startup policy.', category: 'Policies', file_url: '/assets/documents/NIE-Innovation and Startup Policy.pdf' },
+    { id: 'static-3', title: 'Intellectual Property Policy', description: 'Policy governing intellectual property rights.', category: 'Policies', file_url: '/assets/documents/intellectial property policy.pdf' },
+    { id: 'static-4', title: 'NIE Incubation Policy', description: 'Guidelines and policies for incubation.', category: 'Policies', file_url: '/assets/documents/nie-incubation-policy.pdf' }
+  ];
+
+  const allDocuments = [
+    ...staticPolicies,
+    ...(dbDocuments || [])
+  ].filter(doc => {
+    if (category && category !== 'All' && doc.category !== category) return false;
+    if (search && !doc.title.toLowerCase().includes(search.toLowerCase())) return false;
+    return true;
   });
 
   return (
@@ -47,17 +63,17 @@ const Downloads = () => {
           </select>
         </div>
 
-        {isLoading ? (
+        {isLoading && !dbDocuments ? (
           <div className="space-y-4">
             <CardSkeleton /><CardSkeleton />
           </div>
         ) : isError ? (
           <ErrorState onRetry={refetch} />
-        ) : !documents || documents.length === 0 ? (
+        ) : allDocuments.length === 0 ? (
           <EmptyState title="No documents found" message="Try adjusting your search or category filter." />
         ) : (
           <div className="space-y-4">
-            {documents.map(doc => (
+            {allDocuments.map(doc => (
               <DownloadRow 
                 key={doc.id} 
                 title={doc.title} 

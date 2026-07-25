@@ -77,10 +77,10 @@ export default function Leadership() {
               style={{ display: "flex", justifyContent: "center" }}
             >
               <img
-                src="/assets/director.jpg"
-                alt="Mir Amjad Husain — Director, NIEISC"
+                src="/assets/documents/ceo%20image.jpeg"
+                alt="Amjad Husain — CEO & Director, NIEISC"
                 loading="eager"
-                style={{ width: 260, height: 280, borderRadius: 16, objectFit: "cover", objectPosition: "top center", border: "4px solid rgba(255,255,255,0.18)", boxShadow: "0 12px 48px rgba(0,0,0,0.4)" }}
+                style={{ width: 280, height: 280, borderRadius: "50%", objectFit: "cover", objectPosition: "top center", border: "4px solid rgba(255,255,255,0.18)", boxShadow: "0 12px 48px rgba(0,0,0,0.4)" }}
               />
             </motion.div>
             <motion.div
@@ -88,10 +88,10 @@ export default function Leadership() {
               viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.7, ease: "easeOut" }}
             >
               <span style={{ display: "inline-block", background: "linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)", color: "#fff", fontSize: 12, fontWeight: 700, padding: "5px 16px", borderRadius: 100, fontFamily: "var(--font-body)", marginBottom: 18, letterSpacing: "0.04em" }}>
-                Chief Innovation Officer
+                Chief Executive Officer
               </span>
               <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: "clamp(24px, 3vw, 36px)", color: "#fff", margin: "0 0 8px" }}>
-                Mir Amjad Husain
+                Amjad Husain
               </h2>
               <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 14, fontFamily: "var(--font-body)", margin: "0 0 22px", lineHeight: 1.6 }}>
                 Director, NIEISC — NIE Innovation, Incubation &amp; Startup Center
@@ -191,7 +191,7 @@ export default function Leadership() {
       <style>{`
         @media (max-width: 900px) {
           .director-grid { grid-template-columns: 1fr !important; padding: 32px !important; }
-          .director-grid > div:first-child img { width: 200px !important; height: 220px !important; }
+          .director-grid > div:first-child img { width: 220px !important; height: 220px !important; }
         }
         @media (max-width: 768px) {
           .faculty-grid { grid-template-columns: repeat(2, 1fr) !important; }

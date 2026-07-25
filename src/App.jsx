@@ -47,6 +47,7 @@ const Blogs = lazy(() => import('./pages/public/Blogs'));
 const BlogDetail = lazy(() => import('./pages/public/BlogDetail'));
 const Startups = lazy(() => import('./pages/public/Startups'));
 const Donate = lazy(() => import('./pages/public/Donate'));
+const Downloads = lazy(() => import('./pages/public/Downloads'));
 
 import Admin from './pages/admin/Admin';
 
@@ -157,6 +158,7 @@ function AnimatedRoutes() {
             <Route path="/blog/:slug" element={<motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit"><BlogDetail /></motion.div>} />
             <Route path="/startups" element={<motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit"><Startups /></motion.div>} />
             <Route path="/donate" element={<motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit"><Donate /></motion.div>} />
+            <Route path="/downloads" element={<motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit"><Downloads /></motion.div>} />
             <Route path="*" element={<motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit"><NotFound /></motion.div>} />
           </Routes>
         </AnimatePresence>

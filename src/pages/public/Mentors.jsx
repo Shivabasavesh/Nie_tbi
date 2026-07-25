@@ -11,12 +11,13 @@ const fadeUp = {
 export default function Mentors() {
   const isMobile = useMobile();
   const mentors = [
-    { name: 'Arjun Desai', title: 'Ex-VP Product', tags: ['AI/ML', 'Product Strategy'] },
-    { name: 'Dr. Neha Sharma', title: 'AgriTech Researcher', tags: ['Agriculture', 'Deep Tech'] },
-    { name: 'Rahul Verma', title: 'Angel Investor', tags: ['Fundraising', 'B2B SaaS'] },
-    { name: 'Priya Kulkarni', title: 'Clean Energy Expert', tags: ['CleanTech', 'Policy'] },
-    { name: 'Vikram Joshi', title: 'Growth Hacker', tags: ['GTM', 'Marketing'] },
-    { name: 'Ankita Rao', title: 'Hardware Architect', tags: ['IoT', 'Manufacturing'] },
+    { name: 'Amjad Husain', title: 'CEO & Head, NIEISC', tags: ['External/Leadership', 'Startup Strategy'] },
+    { name: 'Dr. Gurumurthy S R', title: 'Faculty Mentor (EEE)', tags: ['Internal Mentor', 'Electrical Engineering'] },
+    { name: 'Dr. H Pradeepa', title: 'Faculty Mentor (EEE)', tags: ['Internal Mentor', 'Electrical Engineering'] },
+    { name: 'Dr. R Chidanandappa', title: 'Faculty Mentor (Mechanical)', tags: ['Internal Mentor', 'Mechanical Engineering'] },
+    { name: 'Dr. Likith Kumar M V', title: 'Faculty Mentor', tags: ['Internal Mentor', 'Innovation'] },
+    { name: 'Dr. Jayasankar V N', title: 'Faculty Mentor (ECE)', tags: ['Internal Mentor', 'Electronics & Comm.'] },
+    { name: 'Dr. Rohit K Mathew', title: 'Faculty Mentor', tags: ['Internal Mentor', 'Tech Strategy'] }
   ];
 
   return (

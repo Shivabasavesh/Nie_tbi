@@ -10,14 +10,11 @@ export default function Footer() {
           
           {/* Brand & About */}
           <div className="space-y-6">
-            <div className="flex items-center space-x-3 mb-2">
-              <div className="w-10 h-10 rounded-full bg-white border-2 border-white/20 flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
-                <img src="/assets/nie-shield.png" alt="NIE Shield" className="h-8 w-auto object-contain" />
-              </div>
-              <div className="flex flex-col justify-center">
-                <span className="font-heading font-extrabold text-2xl text-white leading-none tracking-tight">
-                  NIETBI
-                </span>
+            <div className="mb-4">
+              <div className="inline-flex items-center space-x-4 bg-white rounded-lg p-2.5 shadow-sm">
+                <img src="/assets/nie-shield.png" alt="NIE Shield" className="h-10 sm:h-12 w-auto object-contain" />
+                <div className="w-px h-10 bg-slate-200"></div>
+                <img src="/assets/nietbi-logo.png" alt="NIETBI Logo" className="h-10 sm:h-12 w-auto object-contain" />
               </div>
             </div>
             <p className="text-sm leading-relaxed">

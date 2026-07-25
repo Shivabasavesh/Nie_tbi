@@ -14,8 +14,14 @@ export default function Footer() {
           
           {/* Brand */}
           <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
-            <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: 24, color: 'white', marginBottom: 16 }}>NIETBI</div>
-            <p style={{ fontSize: 14, lineHeight: 1.6, marginBottom: 24 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: isMobile ? 'center' : 'flex-start', marginBottom: 20 }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 16, background: 'white', padding: '10px 16px', borderRadius: 8, boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' }}>
+                <img src="/assets/nie-shield.png" alt="NIE Shield" style={{ height: 48, width: 'auto', objectFit: 'contain' }} />
+                <div style={{ width: 1, height: 40, background: '#E2E8F0' }} />
+                <img src="/assets/nietbi-logo.png" alt="NIETBI Logo" style={{ height: 48, width: 'auto', objectFit: 'contain' }} />
+              </div>
+            </div>
+            <p style={{ fontSize: 14, lineHeight: 1.6, marginBottom: 24, marginTop: 8 }}>
               Empowering deep-tech startups in AgriTech, Clean Energy, Sustainable Technologies and AI & ML from Mysuru and beyond.
             </p>
           </div>

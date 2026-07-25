@@ -20,9 +20,11 @@ import type * as leadership from "../leadership.js";
 import type * as messages from "../messages.js";
 import type * as news from "../news.js";
 import type * as posts from "../posts.js";
+import type * as seed_startups from "../seed_startups.js";
 import type * as settings from "../settings.js";
 import type * as startups from "../startups.js";
 import type * as storage from "../storage.js";
+import type * as update_startup_descriptions from "../update_startup_descriptions.js";
 
 import type {
   ApiFromModules,
@@ -43,9 +45,11 @@ declare const fullApi: ApiFromModules<{
   messages: typeof messages;
   news: typeof news;
   posts: typeof posts;
+  seed_startups: typeof seed_startups;
   settings: typeof settings;
   startups: typeof startups;
   storage: typeof storage;
+  update_startup_descriptions: typeof update_startup_descriptions;
 }>;
 
 /**

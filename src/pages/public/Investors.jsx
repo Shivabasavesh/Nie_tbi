@@ -55,22 +55,12 @@ export default function Investors() {
 
       <section style={{ background: '#F4F6FB', padding: '80px 24px' }}>
         <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: 32, fontWeight: 800, color: 'var(--blue-dark)', marginBottom: 16 }}>Portfolio Highlights</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, justifyContent: 'center', marginBottom: 48 }}>
-            <div style={{ background: 'white', padding: '24px 40px', borderRadius: 16, border: '1px solid #E8ECF8' }}>
-              <div style={{ fontSize: 36, fontWeight: 800, color: 'var(--orange)', marginBottom: 8 }}>₹10Cr+</div>
-              <div style={{ color: 'var(--gray-text)', fontSize: 13, fontWeight: 600, textTransform: 'uppercase' }}>Raised by Startups</div>
-            </div>
-            <div style={{ background: 'white', padding: '24px 40px', borderRadius: 16, border: '1px solid #E8ECF8' }}>
-              <div style={{ fontSize: 36, fontWeight: 800, color: 'var(--orange)', marginBottom: 8 }}>3.5x</div>
-              <div style={{ color: 'var(--gray-text)', fontSize: 13, fontWeight: 600, textTransform: 'uppercase' }}>Average Valuation Jump</div>
-            </div>
-          </div>
-          
-          <div style={{ background: 'linear-gradient(135deg, #0D2B6E 0%, #2E5FD9 100%)', borderRadius: 24, padding: 48, color: 'white' }}>
-            <h3 style={{ fontSize: 28, fontWeight: 700, marginBottom: 16 }}>Join Our Investor Network</h3>
-            <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 32, fontSize: 16 }}>Get exclusive access to our demo days and startup deal rooms.</p>
-            <Link to="/contact" style={{ display: 'inline-block', background: 'white', color: 'var(--blue-dark)', padding: '16px 36px', borderRadius: 8, fontWeight: 700, textDecoration: 'none' }}>
+          <div style={{ background: 'linear-gradient(135deg, #0D2B6E 0%, #2E5FD9 100%)', borderRadius: 24, padding: '60px 40px', color: 'white', boxShadow: '0 20px 40px rgba(13,43,110,0.15)' }}>
+            <h3 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 800, marginBottom: 16, letterSpacing: '-0.02em' }}>Join Our Investor Network</h3>
+            <p style={{ color: 'rgba(255,255,255,0.85)', marginBottom: 32, fontSize: 18, lineHeight: 1.6 }}>Get exclusive access to our demo days, startup deal rooms, and co-investment opportunities.</p>
+            <Link to="/contact" style={{ display: 'inline-block', background: 'white', color: 'var(--blue-dark)', padding: '16px 40px', borderRadius: 12, fontWeight: 700, textDecoration: 'none', transition: 'transform 0.2s', boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
               Contact Investor Relations
             </Link>
           </div>
