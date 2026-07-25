@@ -84,6 +84,12 @@ export default function About() {
           </motion.div>
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} variants={{ hidden: { opacity: 0, x: 40 }, show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } } }}>
             <div style={{ background: "#060E24", borderRadius: 20, padding: 36, color: "#fff", boxShadow: "0 16px 48px rgba(13,43,110,0.2)" }}>
+              <div style={{ marginBottom: 28, textAlign: 'left' }}>
+                <img src="/assets/nie-shield.png" alt="NIE Shield" style={{ height: 52, marginBottom: 8 }} />
+                <div style={{ color: '#fff', fontSize: 12, fontWeight: 500, fontFamily: 'var(--font-body)', opacity: 0.9 }}>
+                  National Institute of Engineering
+                </div>
+              </div>
               <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18, marginBottom: 24, color: "var(--orange)" }}>
                 Quick Facts
               </h3>
@@ -292,9 +298,9 @@ export default function About() {
           </motion.div>
           <div style={{ display: "flex", justifyContent: "center", gap: 24, flexWrap: "wrap" }}>
             {[
-              { icon: <Building2 size={28} />, name: "K-Tech", sub: "Karnataka Innovation & Technology Society" },
-              { icon: <Users size={28} />, name: "Startup Karnataka", sub: "State Startup Ecosystem Initiative" },
-              { icon: <Mail size={28} />, name: "Dept. of Electronics IT BT & S&T", sub: "Govt. of Karnataka" },
+              { img: "/assets/gok-logo.png", name: "Dept. of Electronics IT BT & S&T", sub: "Govt. of Karnataka" },
+              { img: "/assets/startup-karnataka.png", name: "Startup Karnataka", sub: "State Startup Ecosystem Initiative" },
+              { img: "/assets/ktech-logo.jpeg", name: "K-Tech", sub: "Karnataka Innovation & Technology Society" },
             ].map((org, i) => (
               <motion.div
                 key={org.name}
@@ -302,14 +308,14 @@ export default function About() {
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ delay: i * 0.1, duration: 0.5, ease: "easeOut" }}
                 style={{
-                  background: "#fff", borderRadius: 18, padding: "28px 32px",
+                  background: "#fff", borderRadius: 18, padding: "28px",
                   display: "flex", flexDirection: "column", alignItems: "center", gap: 10,
                   minWidth: 200, flex: "1 1 200px", maxWidth: 260,
                   border: "1px solid #E8ECF8", boxShadow: "0 4px 20px rgba(13,43,110,0.06)",
                 }}
               >
-                <div style={{ width: 52, height: 52, borderRadius: 14, background: "var(--blue-dark)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff" }}>
-                  {org.icon}
+                <div style={{ height: 60, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 8 }}>
+                  <img src={org.img} alt={org.name} style={{ height: 56, width: "auto", objectFit: "contain" }} />
                 </div>
                 <h4 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 15, color: "var(--blue-dark)", margin: 0, textAlign: "center" }}>{org.name}</h4>
                 <p style={{ color: "var(--gray-text)", fontSize: 13, textAlign: "center", margin: 0, fontFamily: "var(--font-body)" }}>{org.sub}</p>

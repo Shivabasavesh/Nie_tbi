@@ -51,13 +51,14 @@ export default function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           <Link to="/" className="flex items-center space-x-3">
-            {/* Replace with actual logo */}
-            <div className="w-10 h-10 bg-nie-navy rounded-md flex items-center justify-center text-white font-bold font-heading">
-              NIE
+            <div className="w-9 h-9 rounded-full bg-white border-2 border-white/20 flex items-center justify-center shrink-0 shadow-sm overflow-hidden">
+              <img src="/assets/nie-shield.png" alt="NIE Shield" className="h-[28px] w-auto object-contain" />
             </div>
-            <span className="font-heading font-bold text-xl text-nie-navy hidden sm:block">
-              Technology Business Incubator
-            </span>
+            <div className="flex flex-col justify-center">
+              <span className="font-heading font-extrabold text-2xl text-nie-navy leading-none tracking-tight">
+                NIETBI
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}

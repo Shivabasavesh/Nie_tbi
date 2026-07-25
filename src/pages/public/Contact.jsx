@@ -93,7 +93,7 @@ export default function Contact() {
 
       <div style={{ width: '100%', height: 420 }}>
         <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3898.375276228308!2d76.6380!3d12.2872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3baf700e57202d05%3A0xc48c0a969f6e16bd!2sThe%20National%20Institute%20of%20Engineering%20(NIE)%20-%20South%20Campus!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+          src="https://maps.google.com/maps?q=NIE%20Incubation%20Centre,%20Mysuru&t=&z=15&ie=UTF8&iwloc=&output=embed" 
           width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Google Maps"
         />
       </div>

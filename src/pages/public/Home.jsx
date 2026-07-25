@@ -40,8 +40,9 @@ export default function Home() {
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '60px 24px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 60, position: 'relative', zIndex: 1, minHeight: 'calc(100vh - 200px)', alignItems: 'center' }}>
           
           <motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.13 } } }}>
-            <motion.div variants={fadeUp} style={{ display: 'inline-block', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', padding: '8px 16px', borderRadius: 20, color: 'white', fontSize: 13, fontWeight: 600, marginBottom: 24 }}>
-              🏛 TBI 2.0 Programme — Govt. of Karnataka
+            <motion.div variants={fadeUp} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', backdropFilter: 'blur(12px)', padding: '6px 16px 6px 6px', borderRadius: 30, color: 'white', fontSize: 13, fontWeight: 600, marginBottom: 24 }}>
+              <img src="/assets/gok-logo.png" alt="Govt. of Karnataka" style={{ height: 24, width: 'auto', objectFit: 'contain' }} />
+              Supported by Govt. of Karnataka
             </motion.div>
             <motion.h1 variants={fadeUp} style={{ fontSize: 'clamp(36px, 4.5vw, 64px)', fontWeight: 800, lineHeight: 1.1, marginBottom: 24 }}>
               <span style={{ background: 'linear-gradient(135deg, #FFFFFF 0%, #A8C4FF 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Turning Ideas Into </span>
@@ -98,6 +99,18 @@ export default function Home() {
                  <div style={{ fontSize: 12, textTransform: 'uppercase', color: 'var(--gray-text)', fontWeight: 600, letterSpacing: '0.05em' }}>{s.label}</div>
                </motion.div>
              ))}
+          </motion.div>
+
+          {/* Supported & Recognised By Partners Bar */}
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} variants={fadeUp} style={{ marginTop: 60, paddingTop: 40, borderTop: '1px solid rgba(0,0,0,0.08)', textAlign: 'center' }}>
+            <div style={{ color: 'var(--gray-text)', fontSize: 13, fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: 24 }}>
+              Supported & Recognised by
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 40, flexWrap: 'wrap' }}>
+              <img src="/assets/gok-logo.png" alt="Govt. of Karnataka" style={{ height: 48, filter: 'grayscale(1) opacity(0.6)', transition: 'all 0.3s ease' }} onMouseOver={e => e.currentTarget.style.filter='grayscale(0) opacity(1)'} onMouseOut={e => e.currentTarget.style.filter='grayscale(1) opacity(0.6)'} />
+              <img src="/assets/startup-karnataka.png" alt="Startup Karnataka" style={{ width: 80, filter: 'grayscale(1) opacity(0.6)', transition: 'all 0.3s ease' }} onMouseOver={e => e.currentTarget.style.filter='grayscale(0) opacity(1)'} onMouseOut={e => e.currentTarget.style.filter='grayscale(1) opacity(0.6)'} />
+              <img src="/assets/ktech-logo.jpeg" alt="K-Tech" style={{ width: 72, filter: 'grayscale(1) opacity(0.6)', transition: 'all 0.3s ease', mixBlendMode: 'multiply' }} onMouseOver={e => e.currentTarget.style.filter='grayscale(0) opacity(1)'} onMouseOut={e => e.currentTarget.style.filter='grayscale(1) opacity(0.6)'} />
+            </div>
           </motion.div>
         </div>
       </section>
@@ -181,8 +194,8 @@ export default function Home() {
                 }}>
                   {offer.icon}
                 </div>
-                <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 17, margin: "0 0 8px" }}>{offer.title}</h3>
-                <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, lineHeight: 1.65, margin: 0, fontFamily: "var(--font-body)" }}>{offer.desc}</p>
+                <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 20, margin: "0 0 8px", color: "#ffffff" }}>{offer.title}</h3>
+                <p style={{ color: "rgba(255,255,255,0.85)", fontSize: 16, lineHeight: 1.65, margin: 0, fontFamily: "var(--font-body)" }}>{offer.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -230,7 +243,7 @@ export default function Home() {
             initial="hidden"
             animate={stepsInView ? "show" : "hidden"}
             variants={{ hidden: {}, show: { transition: { staggerChildren: 0.14 } } }}
-            style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}
+            style={{ display: "flex", gap: 24, alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", position: "relative" }}
             className="steps-row"
           >
             {[
@@ -238,14 +251,30 @@ export default function Home() {
               { step: 2, title: "Screening", desc: "Expert panel reviews your application" },
               { step: 3, title: "Pitch & Interview", desc: "Present your idea to the selection committee" },
               { step: 4, title: "Onboarding", desc: "Join NIETBI & start your journey" },
-            ].map((s) => (
-              <motion.div
-                key={s.step}
-                variants={{ hidden: { opacity: 0, x: -30 }, show: { opacity: 1, x: 0, transition: { duration: 0.55, ease: "easeOut" } } }}
-                style={{ flex: "1 1 180px" }}
-              >
-                <StepCard step={s.step} title={s.title} description={s.desc} />
-              </motion.div>
+            ].map((s, idx, arr) => (
+              <React.Fragment key={s.step}>
+                <motion.div
+                  variants={{ hidden: { opacity: 0, x: -30 }, show: { opacity: 1, x: 0, transition: { duration: 0.55, ease: "easeOut" } } }}
+                  style={{ flex: "1 1 180px", position: "relative" }}
+                >
+                  <StepCard number={s.step} title={s.title} description={s.desc} />
+                </motion.div>
+                {idx < arr.length - 1 && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={stepsInView ? { opacity: 1, scale: 1, x: [0, 10, 0] } : { opacity: 0, scale: 0.8 }}
+                    transition={stepsInView ? { 
+                      opacity: { duration: 0.4, delay: 0.3 * idx },
+                      scale: { duration: 0.4, delay: 0.3 * idx },
+                      x: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
+                    } : {}}
+                    className="step-arrow"
+                    style={{ color: 'var(--orange)', opacity: 0.6, flexShrink: 0 }}
+                  >
+                    <ChevronRight size={36} />
+                  </motion.div>
+                )}
+              </React.Fragment>
             ))}
           </motion.div>
         </div>
@@ -264,6 +293,7 @@ export default function Home() {
       <style>{`
         @media (max-width: 640px) {
           .steps-row { flex-direction: column !important; align-items: center !important; }
+          .step-arrow { display: none !important; }
         }
       `}</style>
     </div>

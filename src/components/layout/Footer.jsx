@@ -10,13 +10,15 @@ export default function Footer() {
           
           {/* Brand & About */}
           <div className="space-y-6">
-            <div className="flex items-center space-x-3">
-               <div className="w-12 h-12 bg-white rounded-md flex items-center justify-center text-nie-navy font-bold font-heading text-lg">
-                NIE
+            <div className="flex items-center space-x-3 mb-2">
+              <div className="w-10 h-10 rounded-full bg-white border-2 border-white/20 flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
+                <img src="/assets/nie-shield.png" alt="NIE Shield" className="h-8 w-auto object-contain" />
               </div>
-              <span className="font-heading font-bold text-xl text-white">
-                NIETBI
-              </span>
+              <div className="flex flex-col justify-center">
+                <span className="font-heading font-extrabold text-2xl text-white leading-none tracking-tight">
+                  NIETBI
+                </span>
+              </div>
             </div>
             <p className="text-sm leading-relaxed">
               Fostering innovation and entrepreneurship at The National Institute of Engineering, Mysuru. We support startups with mentoring, infrastructure, and funding access.
@@ -65,7 +67,17 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        {/* Recognised Under Strip */}
+        <div className="pt-8 pb-8 border-t border-white/10 flex flex-col items-center space-y-5">
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest text-center">Recognised under TBI 2.0 Programme</p>
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 opacity-60">
+            <img src="/assets/gok-logo.png" alt="Govt. of Karnataka" className="h-7 w-auto object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
+            <img src="/assets/startup-karnataka.png" alt="Startup Karnataka" className="h-7 w-auto object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
+            <img src="/assets/ktech-logo.jpeg" alt="K-Tech" className="h-7 w-auto object-contain mix-blend-lighten" style={{ filter: 'brightness(0) invert(1)' }} />
+          </div>
+        </div>
+
+        <div className="pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p className="text-xs text-slate-400">
             &copy; {new Date().getFullYear()} NIE Technology Business Incubator. All rights reserved.
           </p>
