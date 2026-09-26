@@ -52,9 +52,9 @@ export default function Home() {
               Empowering deep-tech startups in AgriTech, Clean Energy, Sustainable Technologies and AI & ML from Mysuru and beyond.
             </motion.p>
             <motion.div variants={fadeUp} style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-              <Link to="/apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)', color: '#fff', padding: '14px 32px', borderRadius: 8, textDecoration: 'none', fontWeight: 700, fontSize: 15, boxShadow: '0 4px 20px rgba(245,130,31,0.4)' }}>
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLScSLWU-g-5E-orTRz3CuCWquV6cx79IPGAyVnsixsZabGjCmg/viewform" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)', color: '#fff', padding: '14px 32px', borderRadius: 8, textDecoration: 'none', fontWeight: 700, fontSize: 15, boxShadow: '0 4px 20px rgba(245,130,31,0.4)' }}>
                 Apply Now →
-              </Link>
+              </a>
               <a href="#stats-section" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: '#fff', padding: '14px 28px', borderRadius: 8, textDecoration: 'none', fontWeight: 600, fontSize: 15, border: '1px solid rgba(255,255,255,0.3)', backdropFilter: 'blur(8px)' }}>
                 Learn More
               </a>
@@ -377,9 +377,9 @@ export default function Home() {
         <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}>
           <h2 style={{ fontSize: 'clamp(26px, 3vw, 42px)', color: 'white', marginBottom: 16 }}>Applications Are Now Open</h2>
           <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 18, marginBottom: 40, maxWidth: 600, margin: '0 auto 40px' }}>Join NIETBI and take your startup from idea to commercialization.</p>
-          <Link to="/apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)', color: '#fff', padding: '16px 36px', borderRadius: 8, textDecoration: 'none', fontWeight: 700, fontSize: 16, boxShadow: '0 4px 20px rgba(245,130,31,0.4)' }}>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLScSLWU-g-5E-orTRz3CuCWquV6cx79IPGAyVnsixsZabGjCmg/viewform" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)', color: '#fff', padding: '16px 36px', borderRadius: 8, textDecoration: 'none', fontWeight: 700, fontSize: 16, boxShadow: '0 4px 20px rgba(245,130,31,0.4)' }}>
             Apply for Incubation →
-          </Link>
+          </a>
         </motion.div>
       </section>
       <style>{`

@@ -192,13 +192,13 @@ export default function Navbar() {
                   </AnimatePresence>
                 </div>
               ))}
-              <Link to="/apply" style={{
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLScSLWU-g-5E-orTRz3CuCWquV6cx79IPGAyVnsixsZabGjCmg/viewform" target="_blank" rel="noopener noreferrer" style={{
                 background: 'linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)',
                 color: 'white', padding: '10px 24px', borderRadius: 8, textDecoration: 'none', fontWeight: 700, fontSize: 14,
                 boxShadow: '0 4px 20px rgba(245,130,31,0.4)', marginLeft: 16
               }}>
                 Apply Now
-              </Link>
+              </a>
             </nav>
           )}
 
@@ -266,13 +266,13 @@ export default function Navbar() {
               ))}
             </nav>
             <div style={{ marginTop: 'auto', marginBottom: 40 }}>
-              <Link to="/apply" style={{
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLScSLWU-g-5E-orTRz3CuCWquV6cx79IPGAyVnsixsZabGjCmg/viewform" target="_blank" rel="noopener noreferrer" style={{
                 display: 'block', textAlign: 'center', background: 'linear-gradient(135deg, #F5821F 0%, #FF9A3C 100%)',
                 color: 'white', padding: '16px', borderRadius: 8, textDecoration: 'none', fontWeight: 700, fontSize: 16,
                 boxShadow: '0 4px 20px rgba(245,130,31,0.4)'
               }}>
                 Apply for Incubation →
-              </Link>
+              </a>
             </div>
           </motion.div>
         )}

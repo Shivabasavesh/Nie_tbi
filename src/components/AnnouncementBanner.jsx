@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useMobile } from '../hooks/useMobile';
-import { Link } from 'react-router-dom';
-
 export default function AnnouncementBanner() {
   const isMobile = useMobile();
   const [visible, setVisible] = useState(false);
@@ -57,11 +55,11 @@ export default function AnnouncementBanner() {
             <p style={{ margin: 0, fontSize: '14px', fontWeight: 500 }}>
               {isMobile ? "Applications Now Open — NIETBI 2026" : "🎉 Applications are now open for NIETBI Incubation Program 2026"}
             </p>
-            <Link to="/apply" style={{
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScSLWU-g-5E-orTRz3CuCWquV6cx79IPGAyVnsixsZabGjCmg/viewform" target="_blank" rel="noopener noreferrer" style={{
               color: 'white', textDecoration: 'underline', fontSize: '14px', fontWeight: 700, whiteSpace: 'nowrap'
             }}>
               Apply Now →
-            </Link>
+            </a>
           </div>
           <button
             onClick={handleDismiss}

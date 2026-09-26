@@ -2,7 +2,6 @@ import SEOHead from '../../components/system/SEOHead';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Download, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -78,9 +77,9 @@ export default function WhoCanApply() {
               <Download size={18} /> Download Brochure
             </button>
             <div style={{ borderTop: '1px solid #E8ECF8', paddingTop: 24 }}>
-              <Link to="/apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: 'var(--orange)', fontWeight: 700, fontSize: 16, textDecoration: 'none' }}>
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLScSLWU-g-5E-orTRz3CuCWquV6cx79IPGAyVnsixsZabGjCmg/viewform" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: 'var(--orange)', fontWeight: 700, fontSize: 16, textDecoration: 'none' }}>
                 Start Your Application <ArrowRight size={20} />
-              </Link>
+              </a>
             </div>
           </motion.div>
         </div>
